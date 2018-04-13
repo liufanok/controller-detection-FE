@@ -3,20 +3,22 @@
     <sidebar class="sidebar-container"></sidebar>
     <div class="main-container">
       <navbar></navbar>
+      <tags-view></tags-view>
       <app-main></app-main>
     </div>
   </div>
 </template>
 
 <script>
-import { Navbar, Sidebar, AppMain } from '@/views/layout/components'
+import { Navbar, Sidebar, AppMain, TagsView } from './components'
 
 export default {
   name: 'layout',
   components: {
     Navbar,
     Sidebar,
-    AppMain
+    AppMain,
+    TagsView
   },
   computed: {
     sidebar() {
@@ -27,11 +29,11 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-@import "src/styles/mixin.scss";
-.app-wrapper {
-  @include clearfix;
-  position: relative;
-  height: 100%;
-  width: 100%;
-}
+  @import "src/styles/mixin.scss";
+  .app-wrapper {
+    @include clearfix;
+    position: relative;
+    height: 100%;
+    width: 100%;
+  }
 </style>
