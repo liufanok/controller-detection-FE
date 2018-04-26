@@ -38,152 +38,27 @@
       </el-col>
     </el-row> -->
 
-<div id="main" style="width:100%;height:500px;"></div>
+     <div>欢迎：{{name}}</div>
   </div>
 </template>
 
 <script>
-import echarts from 'echarts'
-import echartsdata from '../../../mock/echart.json'
-import PanelGroup from './components/PanelGroup'
-import LineChart from './components/LineChart'
-import RaddarChart from './components/RaddarChart'
-import PieChart from './components/PieChart'
-import BarChart from './components/BarChart'
-import TransactionTable from './components/TransactionTable'
-import TodoList from './components/TodoList'
-
-const lineChartData = {
-  newVisitis: {
-    expectedData: [100, 120, 161, 134, 105, 160, 165],
-    actualData: [120, 82, 91, 154, 162, 140, 145]
-  },
-  messages: {
-    expectedData: [200, 192, 120, 144, 160, 130, 140],
-    actualData: [180, 160, 151, 106, 145, 150, 130]
-  },
-  purchases: {
-    expectedData: [80, 100, 121, 104, 105, 90, 100],
-    actualData: [120, 90, 100, 138, 142, 130, 130]
-  },
-  shoppings: {
-    expectedData: [130, 140, 141, 142, 145, 150, 160],
-    actualData: [120, 82, 91, 154, 162, 140, 130]
-  }
-}
-
+import { mapGetters } from 'vuex'
 export default {
   name: 'dashboard-admin',
-  components: {
-    PanelGroup,
-    LineChart,
-    RaddarChart,
-    PieChart,
-    BarChart,
-    TransactionTable,
-    TodoList
-  },
   data() {
     return {
-      lineChartData: lineChartData.newVisitis
     }
+  },
+  computed: {
+    ...mapGetters([
+      'name'
+    ])
   },
   mounted() {
     this.InitEchart()
   },
   methods: {
-    handleSetLineChartData(type) {
-      this.lineChartData = lineChartData[type]
-    },
-    InitEchart() {
-      var myChart = echarts.init(document.getElementById('main'))
-      console.log(myChart)
-      myChart.setOption({
-        title: {
-          text: 'Beijing AQI'
-        },
-        tooltip: {
-          trigger: 'axis'
-        },
-        xAxis: {
-          data: echartsdata.map(function(item) {
-            return item[0]
-          })
-        },
-        yAxis: {
-          splitLine: {
-            show: false
-          }
-        },
-        toolbox: {
-          left: 'center',
-          feature: {
-            dataZoom: {
-              yAxisIndex: 'none'
-            },
-            restore: {},
-            saveAsImage: {}
-          }
-        },
-        dataZoom: [{
-          startValue: '2014-06-01'
-        }, {
-          type: 'inside'
-        }],
-        visualMap: {
-          top: 10,
-          right: 10,
-          pieces: [{
-            gt: 0,
-            lte: 50,
-            color: '#096'
-          }, {
-            gt: 50,
-            lte: 100,
-            color: '#ffde33'
-          }, {
-            gt: 100,
-            lte: 150,
-            color: '#ff9933'
-          }, {
-            gt: 150,
-            lte: 200,
-            color: '#cc0033'
-          }, {
-            gt: 200,
-            lte: 300,
-            color: '#660099'
-          }, {
-            gt: 300,
-            color: '#7e0023'
-          }],
-          outOfRange: {
-            color: '#999'
-          }
-        },
-        series: {
-          name: 'Beijing AQI',
-          type: 'line',
-          data: echartsdata.map(function(item) {
-            return item[1]
-          }),
-          markLine: {
-            silent: true,
-            data: [{
-              yAxis: 50
-            }, {
-              yAxis: 100
-            }, {
-              yAxis: 150
-            }, {
-              yAxis: 200
-            }, {
-              yAxis: 300
-            }]
-          }
-        }
-      })
-    }
   }
 }
 </script>
