@@ -43,17 +43,6 @@ export const constantRouterMap = [
       meta: { title: 'dashboard', icon: 'dashboard', noCache: true }
     }]
   }
-  // {
-  //   path: '/documentation',
-  //   component: Layout,
-  //   redirect: '/documentation/index',
-  //   children: [{
-  //     path: 'index',
-  //     component: _import('documentation/index'),
-  //     name: 'documentation',
-  //     meta: { title: 'documentation', icon: 'documentation', noCache: true }
-  //   }]
-  // }
 ]
 
 export default new Router({
@@ -91,8 +80,6 @@ export const asyncRouterMap = [
     },
     children: [
       { path: 'keyboard', component: _import('charts/keyboard'), name: 'keyboardChart', meta: { title: '数据测试', noCache: true }}
-      // { path: 'line', component: _import('charts/line'), name: 'lineChart', meta: { title: 'lineChart', noCache: true }},
-      // { path: 'mixchart', component: _import('charts/mixChart'), name: 'mixChart', meta: { title: 'mixChart', noCache: true }}
     ]
   },
 
@@ -109,22 +96,6 @@ export const asyncRouterMap = [
       { path: 'tab', icon: 'tab', component: _import('table/index'), name: 'tab', meta: { title: 'Table' }}
     ]
   },
-
-  // {
-  //   path: '/form',
-  //   component: Layout,
-  //   redirect: 'noredirect',
-  //   name: 'form',
-  //   meta: {
-  //     title: 'form',
-  //     icon: 'form'
-  //   },
-  //   children: [
-  //     { path: 'create-form', component: _import('form/create'), name: 'createForm', meta: { title: 'createForm', icon: 'table' }},
-  //     { path: 'edit-form', component: _import('form/edit'), name: 'editForm', meta: { title: 'editForm', icon: 'table' }}
-  //   ]
-  // },
-
   {
     path: '/error',
     component: Layout,
@@ -140,58 +111,5 @@ export const asyncRouterMap = [
       { path: '404', component: _import('errorPage/404'), name: 'page404', meta: { title: 'page404', noCache: true }}
     ]
   },
-
-  // {
-  //   path: '/error-log',
-  //   component: Layout,
-  //   redirect: 'noredirect',
-  //   children: [{ path: 'log', component: _import('errorLog/index'), name: 'errorLog', meta: { title: 'errorLog', icon: 'bug' }}]
-  // },
-
-  // {
-  //   path: '/excel',
-  //   component: Layout,
-  //   redirect: '/excel/export-excel',
-  //   name: 'excel',
-  //   meta: {
-  //     title: 'excel',
-  //     icon: 'excel'
-  //   },
-  //   children: [
-  //     { path: 'export-excel', component: _import('excel/exportExcel'), name: 'exportExcel', meta: { title: 'exportExcel' }},
-  //     { path: 'export-selected-excel', component: _import('excel/selectExcel'), name: 'selectExcel', meta: { title: 'selectExcel' }},
-  //     { path: 'upload-excel', component: _import('excel/uploadExcel'), name: 'uploadExcel', meta: { title: 'uploadExcel' }}
-  //   ]
-  // },
-
-  // {
-  //   path: '/zip',
-  //   component: Layout,
-  //   redirect: '/zip/download',
-  //   alwaysShow: true,
-  //   meta: { title: 'zip', icon: 'zip' },
-  //   children: [{ path: 'download', component: _import('zip/index'), name: 'exportZip', meta: { title: 'exportZip' }}]
-  // },
-
-  // {
-  //   path: '/theme',
-  //   component: Layout,
-  //   redirect: 'noredirect',
-  //   children: [{ path: 'index', component: _import('theme/index'), name: 'theme', meta: { title: 'theme', icon: 'theme' }}]
-  // },
-
-  // {
-  //   path: '/clipboard',
-  //   component: Layout,
-  //   redirect: 'noredirect',
-  //   children: [{ path: 'index', component: _import('clipboard/index'), name: 'clipboardDemo', meta: { title: 'clipboardDemo', icon: 'clipboard' }}]
-  // },
-
-  // {
-  //   path: '/i18n',
-  //   component: Layout,
-  //   children: [{ path: 'index', component: _import('i18n-demo/index'), name: 'i18n', meta: { title: 'i18n', icon: 'international' }}]
-  // },
-
   { path: '*', redirect: '/404', hidden: true }
 ]
