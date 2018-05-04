@@ -7,7 +7,8 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">用户名</div>
-          <count-to class="card-panel-num" :startVal="0" :endVal="102400" :duration="2600"></count-to>
+          <div style="font-size:20px;">{{name}}</div>
+          <!-- <count-to class="card-panel-num" :startVal="0" :endVal="102400" :duration="2600"></count-to> -->
         </div>
       </div>
     </el-col>
@@ -18,7 +19,8 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">角色</div>
-          <count-to class="card-panel-num" :startVal="0" :endVal="81212" :duration="3000"></count-to>
+          <div style="font-size:20px;">{{roles[0]=='admin'?'管理员':'普通用户'}}</div>
+          <!-- <count-to class="card-panel-num" :startVal="0" :endVal="81212" :duration="3000"></count-to> -->
         </div>
       </div>
     </el-col>
@@ -29,30 +31,44 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">邮箱</div>
-          <count-to class="card-panel-num" :startVal="0" :endVal="9280" :duration="3200"></count-to>
+          <div style="font-size:20px;word-wrap: break-word;word-break: break-all;"> {{email}}</div>
+          <!-- <count-to class="card-panel-num" :startVal="0" :endVal="9280" :duration="3200"></count-to> -->
         </div>
       </div>
     </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+    <el-col  :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel" @click="handleSetLineChartData('shoppings')">
         <div class="card-panel-icon-wrapper icon-shoppingCard">
           <svg-icon icon-class="time" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
-          <div class="card-panel-text">上次登陆时间</div>
-          <count-to class="card-panel-num" :startVal="0" :endVal="13600" :duration="3600"></count-to>
+          <div class="card-panel-text">上次登陆于</div>
+          <div style="font-size:20px;">{{last_time}}</div>
+          <!-- <count-to class="card-panel-num" :startVal="0" :endVal="13600" :duration="3600"></count-to> -->
         </div>
       </div>
     </el-col>
+     <el-col>
+        <iframe allowtransparency="true" frameborder="0" width="565" height="98" scrolling="no" src="//tianqi.2345.com/plugin/widget/index.htm?s=2&z=3&t=1&v=0&d=3&bd=0&k=&f=&ltf=009944&htf=cc0000&q=1&e=1&a=1&c=54511&w=565&h=98&align=center"></iframe>
+     </el-col>
+   
   </el-row>
 </template>
 
 <script>
 import CountTo from 'vue-count-to'
-
+import { mapGetters } from 'vuex'
 export default {
   components: {
     CountTo
+  },
+  computed: {
+    ...mapGetters([
+      'name',
+      'roles',
+      'email',
+      'last_time'
+    ])
   },
   methods: {
     handleSetLineChartData(type) {
@@ -69,7 +85,10 @@ export default {
     margin-bottom: 32px;
   }
   .card-panel {
-    height: 108px;
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+    height: 85px;
     cursor: pointer;
     font-size: 12px;
     position: relative;
@@ -78,23 +97,23 @@ export default {
     background: #fff;
     box-shadow: 4px 4px 40px rgba(0, 0, 0, .05);
     border-color: rgba(0, 0, 0, .05);
-    &:hover {
-      .card-panel-icon-wrapper {
-        color: #fff;
-      }
-      .icon-people {
-         background: #40c9c6;
-      }
-      .icon-message {
-        background: #36a3f7;
-      }
-      .icon-money {
-        background: #f4516c;
-      }
-      .icon-shoppingCard {
-        background: #34bfa3
-      }
-    }
+    // &:hover {
+    //   .card-panel-icon-wrapper {
+    //     color: #fff;
+    //   }
+    //   .icon-people {
+    //      background: #40c9c6;
+    //   }
+    //   .icon-message {
+    //     background: #36a3f7;
+    //   }
+    //   .icon-money {
+    //     background: #f4516c;
+    //   }
+    //   .icon-shoppingCard {
+    //     background: #34bfa3
+    //   }
+    // }
     .icon-people {
       color: #40c9c6;
     }
@@ -108,8 +127,8 @@ export default {
       color: #34bfa3
     }
     .card-panel-icon-wrapper {
-      float: left;
-      margin: 14px 0 0 14px;
+      // float: left;
+      // margin: 14px 0 0 14px;
       padding: 16px;
       transition: all 0.38s ease-out;
       border-radius: 6px;
