@@ -1,5 +1,6 @@
 export default {
   route: {
+    plant: '数据管理',
     dashboard: '首页',
     introduction: '简述',
     documentation: '文档',

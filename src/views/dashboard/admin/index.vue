@@ -1,8 +1,6 @@
 <template>
   <div class="dashboard-editor-container">
       <panel-group></panel-group>
-
-     <div>欢迎：{{name}}</div>
   </div>
 </template>
 
