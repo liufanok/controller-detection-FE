@@ -11,14 +11,22 @@ const user = {
     avatar: '',
     introduction: '',
     roles: [],
+    email: '',
+    last_time: '',
     setting: {
       articlePlatform: []
     }
   },
 
   mutations: {
+    SET_LAST_TIME: (state, time) => {
+      state.last_time = time
+    },
     SET_CODE: (state, code) => {
       state.code = code
+    },
+    SET_EMAIL: (state, email) => {
+      state.email = email
     },
     SET_TOKEN: (state, token) => {
       state.token = token
@@ -69,9 +77,13 @@ const user = {
           }
           console.log(response.data.data.roles, 'fdd')
           const data = response.data.data
+          
+          commit('SET_EMAIL', data.email)
           commit('SET_ROLES', data.roles)
           commit('SET_NAME', data.name)
           commit('SET_AVATAR', data.avatar)
+          commit('SET_LAST_TIME', data.last_login_time)
+          
           commit('SET_INTRODUCTION', data.introduction)
           resolve(response)
         }).catch(error => {
