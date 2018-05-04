@@ -56,7 +56,7 @@ export default {
     theme: '换肤'
   },
   login: {
-    title: '控制器性能评测系统',
+    title: '控制器性能评价系统',
     logIn: '登录',
     username: '账号',
     password: '密码',
