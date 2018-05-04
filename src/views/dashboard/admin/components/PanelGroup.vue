@@ -48,17 +48,48 @@
         </div>
       </div>
     </el-col>
+    <el-col>
+        <div id="clock">
+          <p class="date">{{ date }}</p>
+          <p class="time">{{ time }}</p>
+          <!-- <p class="text">数字时钟</p> -->
+      </div>
+    </el-col>
      <el-col>
-        <iframe allowtransparency="true" frameborder="0" width="565" height="98" scrolling="no" src="//tianqi.2345.com/plugin/widget/index.htm?s=2&z=3&t=1&v=0&d=3&bd=0&k=&f=&ltf=009944&htf=cc0000&q=1&e=1&a=1&c=54511&w=565&h=98&align=center"></iframe>
+       <img style="width:100%;" :src="img" alt="">
+        <!-- <iframe allowtransparency="true" frameborder="0" width="565" height="98" scrolling="no" src="//tianqi.2345.com/plugin/widget/index.htm?s=2&z=3&t=1&v=0&d=3&bd=0&k=&f=&ltf=009944&htf=cc0000&q=1&e=1&a=1&c=54511&w=565&h=98&align=center"></iframe> -->
      </el-col>
-   
+    
   </el-row>
 </template>
 
 <script>
+var week = ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
+// var timerID = setInterval(updateTime, 1000);
+// updateTime();
+// function updateTime() {
+//     var cd = new Date();
+//     clock.time = zeroPadding(cd.getHours(), 2) + ':' + zeroPadding(cd.getMinutes(), 2) + ':' + zeroPadding(cd.getSeconds(), 2);
+//     clock.date = zeroPadding(cd.getFullYear(), 4) + '-' + zeroPadding(cd.getMonth()+1, 2) + '-' + zeroPadding(cd.getDate(), 2) + ' ' + week[cd.getDay()];
+// };
+
+function zeroPadding(num, digit) {
+  var zero = ''
+  for (var i = 0; i < digit; i++) {
+    zero += '0'
+  }
+  return (zero + num).slice(-digit)
+}
 import CountTo from 'vue-count-to'
 import { mapGetters } from 'vuex'
 export default {
+  data() {
+    return {
+      time: '',
+      date: '',
+      img: '/static/pic/1.jpg'
+    }
+  },
   components: {
     CountTo
   },
@@ -70,7 +101,17 @@ export default {
       'last_time'
     ])
   },
+  mounted() {
+    this.img = `/static/pic/${parseInt(Math.random() * 12 + 1)}.jpg`
+    setInterval(this.updateTime, 1000)
+    this.updateTime()
+  },
   methods: {
+    updateTime() {
+      var cd = new Date()
+      this.time = zeroPadding(cd.getHours(), 2) + ':' + zeroPadding(cd.getMinutes(), 2) + ':' + zeroPadding(cd.getSeconds(), 2)
+      this.date = zeroPadding(cd.getFullYear(), 4) + '-' + zeroPadding(cd.getMonth() + 1, 2) + '-' + zeroPadding(cd.getDate(), 2) + ' ' + week[cd.getDay()]
+    },
     handleSetLineChartData(type) {
       this.$emit('handleSetLineChartData', type)
     }
@@ -79,6 +120,52 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+// html, body {
+//   height: 100%;
+// }
+
+body {
+  background: #0f3854;
+  background: -webkit-radial-gradient(center ellipse, #0a2e38 0%, #000000 70%);
+  background: radial-gradient(ellipse at center, #0a2e38 0%, #000000 70%);
+  background-size: 100%;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+#clock {
+  padding: 20px 0;
+  // background: #daf6ff;
+  font-family: 'Share Tech Mono', monospace;
+  color: #ffffff;
+  text-align: center;
+  // position: absolute;
+  // left: 50%;
+  // top: 50%;
+  // -webkit-transform: translate(-50%, -50%);
+  //         transform: translate(-50%, -50%);
+  color: #0f3854;
+  text-shadow: 0 0 20px #0aafe6, 0 0 20px rgba(10, 175, 230, 0);
+}
+#clock .time {
+  letter-spacing: 0.05em;
+  font-size: 80px;
+  padding: 5px 0;
+}
+#clock .date {
+  letter-spacing: 0.1em;
+  font-size: 24px;
+}
+#clock .text {
+  letter-spacing: 0.1em;
+  font-size: 12px;
+  padding: 20px 0 0;
+}
+
+//=========
 .panel-group {
   margin-top: 18px;
   .card-panel-col{
@@ -97,23 +184,23 @@ export default {
     background: #fff;
     box-shadow: 4px 4px 40px rgba(0, 0, 0, .05);
     border-color: rgba(0, 0, 0, .05);
-    // &:hover {
-    //   .card-panel-icon-wrapper {
-    //     color: #fff;
-    //   }
-    //   .icon-people {
-    //      background: #40c9c6;
-    //   }
-    //   .icon-message {
-    //     background: #36a3f7;
-    //   }
-    //   .icon-money {
-    //     background: #f4516c;
-    //   }
-    //   .icon-shoppingCard {
-    //     background: #34bfa3
-    //   }
-    // }
+    &:hover {
+      .card-panel-icon-wrapper {
+        color: #fff;
+      }
+      .icon-people {
+         background: #40c9c6;
+      }
+      .icon-message {
+        background: #36a3f7;
+      }
+      .icon-money {
+        background: #f4516c;
+      }
+      .icon-shoppingCard {
+        background: #34bfa3
+      }
+    }
     .icon-people {
       color: #40c9c6;
     }

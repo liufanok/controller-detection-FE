@@ -52,50 +52,81 @@ export default new Router({
 })
 
 export const asyncRouterMap = [
+  // {
+  //   path: '/permission',
+  //   component: Layout,
+  //   redirect: '/permission/index',
+  //   meta: { roles: ['admin'] }, // you can set roles in root nav
+  //   children: [{
+  //     path: 'index',
+  //     component: _import('permission/index'),
+  //     name: 'permission',
+  //     meta: {
+  //       title: 'permission',
+  //       icon: 'lock',
+  //       roles: ['admin'] // or you can only set roles in sub nav
+  //     }
+  //   }]
+  // },
   {
-    path: '/permission',
+    path: '/loop',
     component: Layout,
-    redirect: '/permission/index',
-    meta: { roles: ['admin'] }, // you can set roles in root nav
+    redirect: '/loop/index',
+    // meta: { roles: ['admin'] }, // you can set roles in root nav
     children: [{
       path: 'index',
-      component: _import('permission/index'),
-      name: 'permission',
+      component: _import('loopData/index'),
+      name: 'loop',
       meta: {
-        title: 'permission',
-        icon: 'lock',
-        roles: ['admin'] // or you can only set roles in sub nav
+        title: '回路数据',
+        icon: 'chart'
+        // roles: ['admin'] // or you can only set roles in sub nav
       }
     }]
   },
-
   {
-    path: '/charts',
+    path: '/manage',
     component: Layout,
     redirect: 'noredirect',
-    name: 'charts',
+    name: 'manage',
     meta: {
-      title: 'charts',
-      icon: 'chart'
+      title: '后台管理',
+      icon: 'peoples',
+      roles: ['admin'] // or you can only set roles in sub nav
     },
     children: [
-      { path: 'keyboard', component: _import('charts/keyboard'), name: 'keyboardChart', meta: { title: '数据测试', noCache: true }}
+      { path: 'plant', component: _import('manage/plant'), name: 'plant', meta: { title: '数据管理', noCache: true }},
+      { path: 'user', component: _import('manage/user'), name: 'user', meta: { title: '用户管理', noCache: true }},
+      { path: 'workshop', component: _import('manage/workshop'), hidden: true, name: 'workshop', meta: { title: '车间管理', noCache: true }}
     ]
   },
+  // {
+  //   path: '/charts',
+  //   component: Layout,
+  //   redirect: 'noredirect',
+  //   name: 'charts',
+  //   meta: {
+  //     title: 'charts',
+  //     icon: 'chart'
+  //   },
+  //   children: [
+  //     { path: 'keyboard', component: _import('charts/keyboard'), name: 'keyboardChart', meta: { title: '数据测试', noCache: true }}
+  //   ]
+  // },
 
-  {
-    path: '/table',
-    component: Layout,
-    redirect: '/table/index',
-    name: 'table',
-    meta: {
-      title: 'example',
-      icon: 'example'
-    },
-    children: [
-      { path: 'tab', icon: 'tab', component: _import('table/index'), name: 'tab', meta: { title: 'Table' }}
-    ]
-  },
+  // {
+  //   path: '/table',
+  //   component: Layout,
+  //   redirect: '/table/index',
+  //   name: 'table',
+  //   meta: {
+  //     title: 'example',
+  //     icon: 'example'
+  //   },
+  //   children: [
+  //     { path: 'tab', icon: 'tab', component: _import('table/index'), name: 'tab', meta: { title: 'Table' }}
+  //   ]
+  // },
   {
     path: '/error',
     component: Layout,
