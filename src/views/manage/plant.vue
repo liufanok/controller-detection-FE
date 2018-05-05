@@ -179,7 +179,6 @@ export default {
       if (this.dialogstatus === 'add') {
         url = '/api/v1/plant/add-plant '
         data = qs.stringify({
-
           name: this.edit_name
         })
       } else {
@@ -252,11 +251,11 @@ export default {
       request({
         url: '/api/v1/plant/plant-list',
         method: 'post',
-        data: {
+        data: qs.stringify({
           name: name,
           page: page,
           limit: limit
-        }
+        })
       }).then(res => {
         // this.listQuery = {
         //   limit: '',

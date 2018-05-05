@@ -272,12 +272,12 @@ export default {
       request({
         url: '/api/v1/workshop/workshop-list',
         method: 'post',
-        data: {
+        data: qs.stringify({
           plant_id: JSON.parse(data).id,
           name: JSON.parse(data).name,
           page: page,
           limit: limit
-        }
+        })
       }).then(res => {
         this.listLoading = false
         this.list = res.data.data.data
