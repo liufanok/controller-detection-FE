@@ -1,7 +1,7 @@
 export default {
   route: {
-    plant: '数据管理en',
-    dashboard: 'Dashboard',
+    plant: '',
+    dashboard: 'Home',
     introduction: 'Introduction',
     documentation: 'Documentation',
     permission: 'Permission',

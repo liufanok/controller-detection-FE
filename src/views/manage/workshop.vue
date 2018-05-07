@@ -5,10 +5,10 @@
                             <el-input
                             @change='selectPlantName'
                                 size="mini"
-                                placeholder="请输入厂区名"
+                                placeholder="请输入车间名"
                                 v-model="name">
                             </el-input>
-                        <el-button @click="plantAdd"  size="mini" type="primary" icon="el-icon-plus">增加厂区</el-button>
+                        <el-button @click="plantAdd"  size="mini" type="primary" icon="el-icon-plus">增加车间</el-button>
          </div>
     
       
@@ -101,11 +101,11 @@
     </div>
 
     <el-dialog
-  :title="dialogstatus=='add'?'增加厂区':'编辑厂区'"
+  :title="dialogstatus=='add'?'增加车间':'编辑车间'"
   :visible.sync="dialogVisible"
   width="30%"
   :before-close="dialogCancel">
- <el-input v-model="edit_name" placeholder="请输入厂区名"></el-input>
+ <el-input v-model="edit_name" placeholder="请输入车间名"></el-input>
   <el-select v-model="select_work" filterable placeholder="请选择">
     <el-option
       v-for="item in options"
@@ -193,13 +193,13 @@ export default {
       let url = ''
       let data = ''
       if (this.dialogstatus === 'add') {
-        url = '/api/v1/plant/add-plant '
+        url = '/api/v1/plant/add-workshop'
         data = qs.stringify({
 
           name: this.edit_name
         })
       } else {
-        url = '/api/v1/plant/update-plant'
+        url = '/api/v1/plant/update-workshop'
         data = qs.stringify({
           id: this.edit_id,
           name: this.edit_name
