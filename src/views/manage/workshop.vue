@@ -40,7 +40,7 @@
          <div> 
              <span>{{scope.row.loop_count}}</span>
              &nbsp; &nbsp; &nbsp;
-            <el-button @click="workShop" type="primary"  size="mini" icon="el-icon-view"></el-button>
+            <el-button @click="workShop(scope.row)" type="primary"  size="mini" icon="el-icon-view"></el-button>
           </div>
         </template>
       </el-table-column>
@@ -106,12 +106,13 @@
   width="30%"
   :before-close="dialogCancel">
  <el-input v-model="edit_name" placeholder="请输入车间名"></el-input>
-  <el-select v-model="select_work" filterable placeholder="请选择">
+ <div style="margin-bottom:20px;"></div>
+  <el-select v-if="dialogstatus=='edit'" v-model="select_work" filterable placeholder="请选择厂区">
     <el-option
-      v-for="item in options"
-      :key="item.value"
-      :label="item.label"
-      :value="item.value">
+      v-for="item in select_work_list"
+      :key="item.id"
+      :label="item.name"
+      :value="item.id">
     </el-option>
   </el-select>
   <span slot="footer" class="dialog-footer">
@@ -133,7 +134,7 @@ export default {
   data() {
     return {
       select_work: '',
-      select_work_list: '',
+      select_work_list: [],
       dialogstatus: 'add',
       dialogVisible: false,
       name: '',
@@ -163,6 +164,7 @@ export default {
     }
   },
   created() {
+    this.getAllPlant()
     this.getList(this.name, this.listQuery.page, this.listQuery.limit)
     // this.getList('', this.listQuery.page, this.listQuery.limit).then(res => {
     //   this.listLoading = false
@@ -177,8 +179,9 @@ export default {
     // })
   },
   methods: {
-    workShop() {
-      this.$router.push('/manage/workshop')
+    workShop(val) {
+      window.localStorage.setItem('loop', JSON.stringify(val))
+      this.$router.push('/manage/loop')
     },
     plantAdd() {
       this.edit_name = ''
@@ -193,15 +196,16 @@ export default {
       let url = ''
       let data = ''
       if (this.dialogstatus === 'add') {
-        url = '/api/v1/plant/add-workshop'
+        url = '/api/v1/workshop/add-workshop'
         data = qs.stringify({
-
+          plant_id: JSON.parse(window.localStorage.getItem('workshop')).id,
           name: this.edit_name
         })
       } else {
-        url = '/api/v1/plant/update-workshop'
+        url = '/api/v1/workshop/update-workshop'
         data = qs.stringify({
           id: this.edit_id,
+          plant_id: this.select_work,
           name: this.edit_name
         })
       }
@@ -223,6 +227,15 @@ export default {
       this.edit_name = val.name
       this.dialogVisible = true
       this.dialogstatus = 'edit'
+    },
+    // /api/v1/plant/get-all-plant
+    getAllPlant() {
+      request({
+        url: '/api/v1/plant/get-all-plant',
+        method: 'post'
+      }).then(res => {
+        this.select_work_list = res.data.data
+      })
     },
     plantDelete(val) {
       this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
@@ -268,13 +281,14 @@ export default {
     //     this.$router.push('/manage/plant')
     //   }
       const data = window.localStorage.getItem('workshop')
+      this.select_work = JSON.parse(data).id
       this.listLoading = true
       request({
         url: '/api/v1/workshop/workshop-list',
         method: 'post',
         data: qs.stringify({
           plant_id: JSON.parse(data).id,
-          name: JSON.parse(data).name,
+          name: this.name,
           page: page,
           limit: limit
         })

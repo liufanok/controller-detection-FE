@@ -97,7 +97,8 @@ export const asyncRouterMap = [
     children: [
       { path: 'plant', component: _import('manage/plant'), name: 'plant', meta: { title: '数据管理', noCache: true }},
       { path: 'user', component: _import('manage/user'), name: 'user', meta: { title: '用户管理', noCache: true }},
-      { path: 'workshop', component: _import('manage/workshop'), hidden: true, name: 'workshop', meta: { title: '车间管理', noCache: true }}
+      { path: 'workshop', component: _import('manage/workshop'), hidden: true, name: 'workshop', meta: { title: '车间管理', noCache: true }},
+      { path: 'loop', component: _import('manage/loop'), hidden: true, name: 'loop', meta: { title: '回路管理', noCache: true }}
     ]
   },
   // {
