@@ -69,20 +69,14 @@ export const asyncRouterMap = [
   //   }]
   // },
   {
-    path: '/loop',
+    path: '/loopdata',
     component: Layout,
-    redirect: '/loop/index',
+    redirect: '/loopData/index',
     // meta: { roles: ['admin'] }, // you can set roles in root nav
-    children: [{
-      path: 'index',
-      component: _import('loopData/index'),
-      name: 'loop',
-      meta: {
-        title: '回路数据',
-        icon: 'chart'
-        // roles: ['admin'] // or you can only set roles in sub nav
-      }
-    }]
+    children: [
+      { path: 'index', component: _import('loopData/index'), name: 'loopdata', meta: { title: '回路数据', icon: 'chart' }},
+      { path: 'report', component: _import('loopData/report'), hidden: true, name: 'report', meta: { title: '评价报告', noCache: true }}
+    ]
   },
   {
     path: '/manage',
