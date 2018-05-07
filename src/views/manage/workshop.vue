@@ -38,7 +38,7 @@
       <el-table-column   align="center" label="回路数量">
         <template slot-scope="scope">
          <div> 
-             <span>{{scope.row.loop_count}}</span>
+             <span style="font-weight: bold;display: inline-block;width: 30px;">{{scope.row.loop_count}}</span>
              &nbsp; &nbsp; &nbsp;
             <el-button @click="workShop(scope.row)" type="primary"  size="mini" icon="el-icon-view"></el-button>
           </div>
