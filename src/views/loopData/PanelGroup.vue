@@ -43,10 +43,10 @@
           </div>
           <div class="card-panel-description">
             <div class="card-panel-text" style="text-align:right;">评价结果</div>
-            <el-button type="success" :size="paneldata.result=='Excellent'?'medium':'mini'" :disabled="paneldata.result!=='Excellent'?Boolean(true):Boolean(false)">Excellent</el-button>
-            <el-button type="primary" :size="paneldata.result=='Good'?'medium':'mini'" :disabled="paneldata.result!=='Good'?Boolean(true):Boolean(false)">Good</el-button>
-            <el-button type="warning" :size="paneldata.result=='Fair '?'medium':'mini'" :disabled="paneldata.result!=='Fair '?Boolean(true):Boolean(false)">Fair </el-button>
-            <el-button type="danger" :size="paneldata.result=='Poor'?'medium':'mini'" :disabled="paneldata.result!=='Poor'?Boolean(true):Boolean(false)">Poor</el-button>
+            <el-button type="success" :size="paneldata.result=='Excellent'?'medium':'mini'" :disabled="paneldata.result!=='Excellent'?Boolean(true):Boolean(false)" :plain="paneldata.result!=='Excellent'?Boolean(true):Boolean(false)">Excellent</el-button>
+            <el-button type="primary" :size="paneldata.result=='Good'?'medium':'mini'" :disabled="paneldata.result!=='Good'?Boolean(true):Boolean(false)" :plain="paneldata.result!=='Good'?Boolean(true):Boolean(false)">Good</el-button>
+            <el-button type="warning" :size="paneldata.result=='Fair'?'medium':'mini'" :disabled="paneldata.result!=='Fair'?Boolean(true):Boolean(false)" :plain="paneldata.result!=='Fair'?Boolean(true):Boolean(false)">Fair </el-button>
+            <el-button type="danger" :size="paneldata.result=='Poor'?'medium':'mini'" :disabled="paneldata.result!=='Poor'?Boolean(true):Boolean(false)" :plain="paneldata.result!=='Poor'?Boolean(true):Boolean(false)">Poor</el-button>
             <!-- <count-to class="card-panel-num" :startVal="0" :endVal="81212" :duration="3000"></count-to> -->
           </div>
         </div>
