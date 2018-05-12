@@ -126,6 +126,7 @@
             date: val,
             loop_id: JSON.parse(window.localStorage.getItem('report')).id
           }
+          this.select_date = ''
           request({
             url: '/api/v1/result/time-list',
             method: 'post',

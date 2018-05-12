@@ -316,7 +316,6 @@
       // 文件上传前
       // 文件上传前
       zipChange(file) {
-        console.log(file)
         if (file.type.indexOf('zip') > 0) {
           this.zip_file = file
           return false
@@ -366,7 +365,6 @@
               this.$Message.success('zip上传成功')
             }, 1500)
           }, error => {
-            console.log(error)
           })
         } else {
           this.$Message.error('请选择正确的压缩包格式')

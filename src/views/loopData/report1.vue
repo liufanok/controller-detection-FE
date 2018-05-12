@@ -221,7 +221,6 @@
             sf: res.data.data.sf,
             esf: res.data.data.esf
           }
-          // this.chart(res.data.data.chart_data)
         })
       }
     }

@@ -60,7 +60,6 @@ const user = {
           const data = response.data
           commit('SET_TOKEN', data.token)
           setToken(response.data.token)
-          console.log('fd')
           resolve()
         }).catch(error => {
           reject(error)
@@ -75,7 +74,6 @@ const user = {
           if (!response.data) { // 由于mockjs 不支持自定义状态码只能这样hack
             reject('error')
           }
-          console.log(response.data.data.roles, 'fdd')
           const data = response.data.data
           
           commit('SET_EMAIL', data.email)

@@ -59,7 +59,6 @@
     },
     methods: {
       initradarEchart() {
-        console.log(this.option, 'lo')
         this.radarChart = echarts.init(document.getElementById(this.id))
         const itemoption = {
           // backgroundColor: new echarts.graphic.RadialGradient(0.5, 0.3, 0.2, [{
