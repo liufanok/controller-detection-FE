@@ -21,7 +21,9 @@
           <svg-icon icon-class="eye" />
         </span>
       </el-form-item>
-
+      <div class="reset-password">
+        <a href="/static/resetpassword/index.html">修改密码</a>
+      </div>
       <el-button type="primary" style="width:100%;margin-bottom:30px;" :loading="loading" @click.native.prevent="handleLogin">{{$t('login.logIn')}}</el-button>
 
       <!-- <div class="tips">
@@ -295,7 +297,11 @@ $light_gray:#eee;
 $bg:#2d3a4b;
 $dark_gray:#889aa4;
 $light_gray:#eee;
-
+.reset-password{
+    margin-bottom: 14px;
+    color: white;
+    text-align: right;
+}
 .login-container {
   position: fixed;
   height: 100%;

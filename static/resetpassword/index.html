@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>重置密码</title>
+  <meta charset="UTF-8">
+
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=0, user-scalable=yes">
+  <link rel="stylesheet" href="../public/css/resetpassword.css">
+  <link rel="stylesheet" href="../public/css/component.css">
+
+</head>
+
+<body>
+  <div class="container demo-2">
+    <div class='content'>
+      <div id="large-header" class="large-header">
+        <canvas id="demo-canvas" width="1077" height="957"></canvas>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="reset">
+
+
+
+
+
+  </div>
+  <div class="raz-pop">
+    <div class="inner">
+      <img src="../public/images/error.svg" alt="" srcset="">
+      <p class="error"></p>
+    </div>
+  </div>
+</body>
+<script src="../public/javascript/jquery.min.js"></script>
+<script src="../public/javascript/demo-2.js"></script>
+<script type="text/javascript">
+  var timer = null
+  var animatePop = function(top, msg) {
+    $('.error').html(msg)
+    var $raz_pop = document.querySelector('.raz-pop')
+
+    if (!timer) {
+      $raz_pop.style.transform = 'translateY(15px)'
+      $raz_pop.style.transition = 'transform 1s'
+      setTimeout(function() {
+        $raz_pop.style.transform = 'translateY(-70px)'
+        $raz_pop.style.transition = 'transform 1s'
+        timer = null
+      }, 2000)
+  }
+  }
+  var initPrompt = function(value, flag) {
+    var img = flag ? '../public/images/success.svg' : '../public/images/error.svg'
+    let html = '<div id="prompt">'
+    html += '<div class="inner">'
+    html += '<img src=' + img + '>'
+    html += '<span>' + value + '</span>'
+    html += '</div>'
+    html += '</div>'
+    $('.reset').empty()
+    $('.reset').append(html)
+  }
+  var initPassWord = function() {
+    let html = '<div class="form-password">'
+    html += '<p>密码重置</p>'
+
+    html += '<div class="inner">'
+    html += '<p class="hint">*&nbsp;8位字符以上，必须包含大小写</p>'
+    html += ' <input type="password" id="password" type="text" placeholder="请输入新密码">'
+    html += '<input type="password" id="password2" type="text" placeholder="请再次输入密码">'
+
+    html += '<button  id="sendpassword" class="gray" type="submit">确认</button>'
+    html += '</div>'
+    html += '</div>'
+    $('.reset').empty()
+    $('.reset').append(html)
+    $(document).on('click', '#sendpassword', function() {
+      if ($('#password').val() == '' || $('#password2').val() == '') {
+        // 密码不能为空
+        animatePop('15px', '密码不能为空!')
+        return
+      }
+      if ($('#password').val().length < 8 || $('#password2').val().length < 8) {
+        animatePop('15px', '密码长度必须大于等于8位，必须包含大小写!')
+        return
+      }
+      if ($('#password').val() != $('#password2').val()) {
+        // 两次密码输入不一致
+        animatePop('15px', '两次密码输入不一致！')
+        return
+      }
+      const url = '/api/v1/site/reset-password'
+      const data = {
+        token: window.location.href.split('?')[1].split('=')[1],
+        password: $('#password2').val()
+      }
+      $.post(url, data, function(res) {
+        if (res.code == 0) {
+          initPrompt('密码重置成功', true)
+        } else {
+          // initPrompt(res.message, false)
+          animatePop('15px', res.message)
+        }
+      })
+    })
+  }
+
+  var initEmail = function() {
+    let html = '<div class="form">'
+    html += '<h1>请求密码重置</h1>'
+    html += '<p>我们将会发送一个重置密码链接到您的邮箱，请注意查收。</p>'
+    html += '<input id="sendmsg" type="text" placeholder="请输入邮箱">'
+    html += ' <button id="sendEmail" class="gray" type="submit">发送</button>'
+    html += '</div>'
+    $('.reset').empty()
+    $('.reset').append(html)
+  }
+  var initRequest = function() {
+    initEmail()
+    $(document).on('click', '#sendEmail', function() {
+      console.log('gg')
+      var regex = /^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g
+      if ($('#sendmsg').val() == '') {
+        // 邮箱不能为空
+
+        animatePop('15px', '邮箱不能为空！')
+        return
+      }
+      if (!regex.test($('#sendmsg').val())) {
+        // 格式不符
+        animatePop('15px', '邮箱格式不对！')
+        return
+      }
+      const url = '/api/v1/site/reset-password-request'
+      const data = {
+        username: $('#sendmsg').val()
+      }
+  
+      initPrompt('邮箱正在发送中....', true)
+      $.post(url, data, function(res) {
+        if (res.code == 0) {
+          initPrompt('邮箱发送成功', true)
+        } else {
+          setTimeout(() => {
+            initEmail()
+            animatePop('15px', res.message)
+          }, 1000)
+      
+      }
+      })
+    })
+  }
+  $(function() {
+    if (window.location.href.indexOf('token') > 0) {
+      initPassWord()
+    } else {
+      initRequest()
+    }
+
+    // initPrompt('邮箱发送失败!请联系管理员', false)
+  })
+
+</script>
+
+</html>

@@ -1,6 +1,27 @@
 <template>
   <div id="user" class="app-container calendar-list-container">
-    <ul class="search-bar">
+    <!-- <sticky className="sub-navbar published">
+          <el-input clearable @keyup.enter.native="searchRole"  v-model="search.username" placeholder="请输入用户名"></el-input>
+         <el-select  @change="selectWorkChange"  clearable v-model="search.workshop_id" filterable placeholder="请选择厂区">
+            <el-option
+            v-for="item in select_workshop_list"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id">
+            </el-option>
+        </el-select>
+          <el-select    v-model="select_loop" clearable filterable placeholder="请选择车间">
+            <el-option
+            v-for="item in select_loop_list"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id">
+            </el-option>
+        </el-select>
+          <el-button @click="searchRole" type="primary">搜索</el-button>
+    </sticky> -->
+    <section style="display: flex;justify-content: space-between;align-items: center;">
+      <ul class="search-bar">
       <li>
         <el-input clearable @keyup.enter.native="searchRole"  v-model="search.username" placeholder="请输入用户名"></el-input>
       </li>
@@ -28,6 +49,10 @@
         <el-button @click="searchRole" type="primary">搜索</el-button>
       </li>
     </ul>
+    <div>
+       <el-button @click="getData" type="primary">导处数据</el-button>
+    </div>
+    </section>
     <!-- Note that row-key is necessary to get a correct row order. -->
     <el-table :data="list" row-key="id" v-loading.body="listLoading" border fit highlight-current-row style="width: 100%">
       <el-table-column align="center" label="ID" width="50">
@@ -89,10 +114,14 @@ const ROLE = [
   }
 ]
 var qs = require('qs')
+import Sticky from '@/components/Sticky'
 import request from '@/utils/request'
 import Sortable from 'sortablejs'
 export default {
   name: 'user',
+  components: {
+    Sticky
+  },
   data() {
     return {
       select_loop_list: [],
@@ -141,6 +170,14 @@ export default {
       this.select_loop = ''
       this.select_loop_list = []
       this.getAllLoop()
+    },
+    getData() {
+      request({
+        url: '/api/v1/loops/export',
+        method: 'post'
+      }).then(res => {
+        // 返回值
+      })
     },
     getAllLoop() {
       request({
