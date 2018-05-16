@@ -62,7 +62,7 @@ export default {
       this.chart.setOption({
         title: {
           text: '均值',
-          subtext: '数据来自西安兰特水电测控技术有限公司',
+          subtext: '数据来自北京化工大学',
           x: 'center',
           align: 'right'
         },

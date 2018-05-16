@@ -170,7 +170,7 @@
   width="400"
   :before-close="uploadClose">
           <el-upload :before-upload="zipChange" action="">
-           <el-button type="primary">选择上传文件上传<i class="el-icon-upload el-icon--right"></i></el-button>
+           <el-button type="primary">上传文件<i class="el-icon-upload el-icon--right"></i></el-button><a href="/static/template/批量导入用户.xlsx" download="批量导入用户.xlsx">下载模板</a>
           </el-upload>
           <div v-if="zip_file !== null">
               <div>

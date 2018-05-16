@@ -59,6 +59,9 @@ export default {
   login: {
     title: 'CPA System',
     logIn: 'Log in',
+    usernameInput: 'Please input username',
+    passwordInput: 'Please input password',
+    resetpassword: 'Reset Password',
     username: 'Username',
     password: 'Password',
     any: 'any',

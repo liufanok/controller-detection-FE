@@ -50,7 +50,7 @@
       </li>
     </ul>
     <div>
-       <el-button @click="getData" type="primary">导处数据</el-button>
+       <el-button @click="getData" type="primary">导出数据</el-button>
     </div>
     </section>
     <!-- Note that row-key is necessary to get a correct row order. -->

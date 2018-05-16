@@ -47,7 +47,6 @@
       watch: {
         option() {
           this.initLineEchart(this.option)
-          console.log(this.option, 'centigrade')
         }
       },
       beforeDestroy() {

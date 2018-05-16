@@ -59,6 +59,9 @@ export default {
   login: {
     title: '控制器性能评价系统',
     logIn: '登录',
+    usernameInput: '请输入用户名',
+    passwordInput: '请输入密码',
+    resetpassword: '修改密码',
     username: '账号',
     password: '密码',
     any: '随便填',
