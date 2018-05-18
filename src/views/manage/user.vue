@@ -346,7 +346,7 @@
               this.dialog.add = false
               this.$message({
                 type: 'success',
-                message: '更新成功!'
+                message: this.$t('plant.success')
               })
             }
           })
@@ -408,7 +408,7 @@
             this.dialog.add = false
             this.$message({
               type: 'success',
-              message: '更新成功!'
+              message: this.$t('plant.success')
             })
           }
         })
@@ -445,7 +445,7 @@
           // this.getList(this.name, 1, this.listQuery.limit)
           this.$message({
             type: 'success',
-            message: '更新成功!'
+            message: this.$t('plant.success')
           })
         })
       },
@@ -490,7 +490,7 @@
           // this.getList(this.name, 1, this.listQuery.limit)
           this.$message({
             type: 'success',
-            message: '更新成功!'
+            message: this.$t('plant.success')
           })
         })
       },
