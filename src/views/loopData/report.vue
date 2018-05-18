@@ -1,7 +1,7 @@
 <template>
     <div class="dashboard-editor-container">
         <sticky className="sub-navbar published">
-            <el-date-picker value-format="yyyy-MM-dd" v-model="value_date" type="date" @change="valueDateChange" placeholder="选择日期">
+            <el-date-picker value-format="yyyy-MM-dd" v-model="value_date" type="date" @change="valueDateChange" :placeholder="$t('data.date')">
             </el-date-picker>
             <el-select v-model="select_date" filterable :placeholder="$t('data.scope')">
                 <el-option v-for="(index,item) in select_date_list" :key="index" :label="item" :value="index">
@@ -61,7 +61,7 @@
             </el-row>
             <el-row :gutter="32">
                 <div class="suggest">
-                    意见：{{suggest}}
+                    {{$t('data.suggest')}}：{{suggest}}
                 </div>
             </el-row>
         </section>
@@ -166,33 +166,33 @@
               xdata: res.data.data.chart_data.x_data
             }
             this.barCahrt_data_1 = {
-              x_data: ['sv', 'pv', 'mv', '偏差'],
+              x_data: ['sv', 'pv', 'mv', this.$t('data.pian')],
               y_data: [res.data.data.dev[0], res.data.data.dev[1], res.data.data.dev[2], res.data.data.dev[3]]
             }
             this.barCahrt_data_2 = {
-              x_data: ['sv', 'pv', 'mv', '偏差'],
+              x_data: ['sv', 'pv', 'mv', this.$t('data.pian')],
               y_data: [res.data.data.e[0], res.data.data.e[1], res.data.data.e[2], res.data.data.e[3]]
             }
             this.option_one = {
-              title: '震荡指数',
+              title: this.$t('data.osci'),
               center: 0.4,
               fuc: 0.4,
               data: res.data.data.osci,
               max: 1
             }
             this.option_two = {
-              title: '相对性能指标',
+              title: this.$t('data.rpi'),
               center: 0.5,
               fuc: 1,
               data: res.data.data.rpi,
               max: 2
             }
             this.centigrade_data_1 = {
-              title: '投用率',
+              title: this.$t('data.sf'),
               data: res.data.data.sf
             }
             this.centigrade_data_2 = {
-              title: '有效投用率',
+              title: this.$t('data.esf'),
               data: res.data.data.esf
             }
             // this.chart(res.data.data.chart_data)

@@ -7,7 +7,7 @@
             <svg-icon icon-class="report_1" class-name="card-panel-icon" />
           </div>
           <div class="card-panel-description">
-            <div class="card-panel-text">回路名称</div>
+            <div class="card-panel-text">{{$t('data.name')}}</div>
             <div class="card-panel-num">{{paneldata.loop_name}}</div>
           </div>
         </div>
@@ -18,7 +18,7 @@
             <svg-icon icon-class="report_3" class-name="card-panel-icon" />
           </div>
           <div class="card-panel-description">
-            <div class="card-panel-text">稳态时间</div>
+            <div class="card-panel-text">{{$t('data.time')}}</div>
             <count-to class="card-panel-num" :startVal="0" :endVal="Number(paneldata.set_time)" :duration="3200"></count-to>s
           </div>
         </div>
@@ -29,7 +29,7 @@
             <svg-icon icon-class="report_4" class-name="card-panel-icon" />
           </div>
           <div class="card-panel-description">
-            <div class="card-panel-text">切换次数</div>
+            <div class="card-panel-text">{{$t('data.switch')}}</div>
             <count-to class="card-panel-num" :startVal="0" :endVal="Number(paneldata.switch)" :duration="3600"></count-to>
           </div>
         </div>
@@ -42,7 +42,7 @@
             <svg-icon icon-class="report_2" class-name="card-panel-icon" />
           </div>
           <div class="card-panel-description">
-            <div class="card-panel-text" style="text-align:right;">评价结果</div>
+            <div class="card-panel-text" style="text-align:right;">{{$t('data.result')}}</div>
             <el-button type="success" :size="paneldata.result=='Excellent'?'medium':'mini'" :disabled="paneldata.result!=='Excellent'?Boolean(true):Boolean(false)" :plain="paneldata.result!=='Excellent'?Boolean(true):Boolean(false)">Excellent</el-button>
             <el-button type="primary" :size="paneldata.result=='Good'?'medium':'mini'" :disabled="paneldata.result!=='Good'?Boolean(true):Boolean(false)" :plain="paneldata.result!=='Good'?Boolean(true):Boolean(false)">Good</el-button>
             <el-button type="warning" :size="paneldata.result=='Fair'?'medium':'mini'" :disabled="paneldata.result!=='Fair'?Boolean(true):Boolean(false)" :plain="paneldata.result!=='Fair'?Boolean(true):Boolean(false)">Fair </el-button>

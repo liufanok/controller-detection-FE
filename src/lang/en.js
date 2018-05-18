@@ -77,7 +77,23 @@ export default {
     },
     data: {
         scope: 'Period',
+        date: 'Select Date',
         loop: 'View Report',
+        name: 'Loop Name',
+        time: 'Steady-state time',
+        switch: 'Switching times',
+        dev: 'Standard deviation',
+        from: 'Data from Beijing University of Chemical Technology',
+        e: 'Mean',
+        rpi: 'Relative Performance Index',
+        osci: 'Concussion Index',
+        esf: 'Effective Investment Rate',
+        sf: 'Investment Rate',
+        result: 'Evaluation Results',
+        suggest: 'Suggest',
+        good: 'Normal',
+        bad: 'Abnormal',
+        pian: 'Deviation'
     },
     error: {
         data: 'No Data',

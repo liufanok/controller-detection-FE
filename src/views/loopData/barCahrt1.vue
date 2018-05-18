@@ -61,8 +61,8 @@ export default {
 
       this.chart.setOption({
         title: {
-          text: '均值',
-          subtext: '数据来自北京化工大学',
+          text: this.$t('data.e'),
+          subtext: this.$t('data.from'),
           x: 'center',
           align: 'right'
         },

@@ -147,7 +147,7 @@
             },
             data: [{
               value: this.option.data,
-              name: this.option.data > this.option.fuc ? '异常' : '正常'
+              name: this.option.data > this.option.fuc ? this.$t('data.bad') : this.$t('data.good')
             }]
           }]
         }

@@ -87,7 +87,23 @@ export default {
     },
     data: {
     scope: '时间段',
+        date: '请选择日期',
         loop: '查看报告',
+        name: '回路名称',
+    time: '稳态时间',
+    switch: '切换次数',
+        dev: '标准差',
+        from: '数据来自北京化工大学',
+        e: '均值',
+        rpi: '相对性能指标',
+        osci: '震荡指数',
+        esf: '有效投用率',
+        sf: '投用率',
+    result: '评价结果',
+        suggest: '意见',
+        good: '正常',
+        bad: '异常',
+        pian: '偏差'
     },
     error: {
       data: '暂无数据',
