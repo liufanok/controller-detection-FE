@@ -25,7 +25,7 @@ export default {
         search: 'Search',
         export: 'Export Data',
         loopname: 'Loop Name',
-        workshopname: 'Workshop Name',
+        workshopname: 'Belongs Workshop',
         operation: 'Operation'
     },
     plant: {

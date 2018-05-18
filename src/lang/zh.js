@@ -25,7 +25,7 @@ export default {
         search: '搜索',
         export: '导出数据',
         loopname: '回路名',
-        workshopname: '车间名称',
+        workshopname: '所属车间',
         operation: '操作'
     },
     plant: {

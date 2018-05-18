@@ -3,7 +3,7 @@
     <section style="display: flex;justify-content: space-between;align-items: center;">
       <ul class="search-bar">
       <li>
-        <el-input clearable @keyup.enter.native="searchRole"  v-model="search.username" :placeholder="$t('loopdata.loop')"></el-input>
+        <el-input clearable @keyup.enter.native="searchRole"  v-model="search.name" :placeholder="$t('loopdata.loop')"></el-input>
       </li>
        <li>
             <el-select  @change="selectWorkChange"  clearable v-model="search.workshop_id" filterable :placeholder="$t('loopdata.plant')">
