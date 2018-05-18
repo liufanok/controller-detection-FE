@@ -52,14 +52,15 @@
        <el-table-column align="center" :label="$t('user.status')"  width="80">
 <template slot-scope="scope">
   <!-- <span>{{scope.row.status}}</span> -->
-  <el-tag v-if="scope.row.status==10" type="success">{{$t('user.normal')}}</el-tag>
-  <el-tag v-else type="danger">{{$t('user.forbidden')}}</el-tag>
+  <el-tag v-if="scope.row.status==10" type="success">{{$t('user.status1')}}</el-tag>
+  <el-tag v-else type="danger">{{$t('user.status0')}}</el-tag>
 </template>
       </el-table-column>
       <!-- ？roles -->
-       <el-table-column align="center" :label="$t('user.role1')" width="80">
+       <el-table-column align="center" :label="$t('user.role1')" width="100">
 <template slot-scope="scope">
-  <span>{{scope.row.roles}}</span>
+    <el-tag v-if="scope.row.roles=='admin'" type="primary">{{$t('user.admin')}}</el-tag>
+    <el-tag v-else type="warning">{{$t('user.normal')}}</el-tag>
 </template>
       </el-table-column>
       <!-- create_time -->

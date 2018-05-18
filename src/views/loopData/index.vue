@@ -208,7 +208,7 @@ export default {
         this.search.total = res.data.data.count
         this.$message({
           type: 'success',
-          message: '成功!'
+          message: this.$t('plant.success')
         })
       })
     },

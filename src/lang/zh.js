@@ -15,7 +15,8 @@ export default {
     email: '邮箱',
     lastLogin: '上次登录时间',
       admin: '管理员',
-      normal: '普通用户'
+      normal: '普通用户',
+      langsuccess: '语言切换成功'
   },
     loopdata: {
     loop: '请输入回路名',

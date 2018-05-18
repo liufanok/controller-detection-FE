@@ -55,7 +55,7 @@ export default {
       }
     }
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 8) {
+      if (value.length < 1) {
         callback(new Error(this.$t('login.password')))
       } else {
         callback()

@@ -7,7 +7,7 @@ export default {
     report: 'CPA Report',
     workshop: 'Workshop Manage',
     loop: 'Loop Manage',
-      detail: 'Report Detail'
+      detail: 'Report Detail',
   },
   home: {
     username: 'Username',
@@ -15,7 +15,8 @@ export default {
     email: 'Email',
     lastLogin: 'Last Login At',
       admin: 'Admin',
-      normal: 'Normal'
+      normal: 'Normal',
+      langsuccess: 'switch language success',
   },
     loopdata: {
         loop: 'Loop Name',
