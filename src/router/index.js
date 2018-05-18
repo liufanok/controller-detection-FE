@@ -59,7 +59,7 @@ export const asyncRouterMap = [
     // meta: { roles: ['admin'] }, // you can set roles in root nav
     children: [
       { path: 'index', component: _import('loopData/index'), name: 'loopdata', meta: { title: 'report', icon: 'chart' }},
-      { path: 'report', component: _import('loopData/report'), hidden: true, name: 'report', meta: { title: '', noCache: true }}
+      { path: 'report', component: _import('loopData/report'), hidden: true, name: 'report', meta: { title: 'detail', noCache: true }}
     ]
   },
   {
@@ -75,7 +75,7 @@ export const asyncRouterMap = [
     children: [
       { path: 'plant', component: _import('manage/plant'), name: 'plant', meta: { title: 'plant', noCache: true }},
       { path: 'user', component: _import('manage/user'), name: 'user', meta: { title: 'user', noCache: true }},
-      { path: 'workshop', component: _import('manage/workshop'), hidden: true, name: 'workshop', meta: { title: '车间管理', noCache: true }},
+      { path: 'workshop', component: _import('manage/workshop'), hidden: true, name: 'workshop', meta: { title: 'workshop', noCache: true }},
       { path: 'loop', component: _import('manage/loop'), hidden: true, name: 'loop', meta: { title: 'loop', noCache: true }}
     ]
   },

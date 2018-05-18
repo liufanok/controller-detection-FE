@@ -1,32 +1,12 @@
 <template>
   <div id="user" class="app-container calendar-list-container">
-    <!-- <sticky className="sub-navbar published">
-          <el-input clearable @keyup.enter.native="searchRole"  v-model="search.username" placeholder="请输入用户名"></el-input>
-         <el-select  @change="selectWorkChange"  clearable v-model="search.workshop_id" filterable placeholder="请选择厂区">
-            <el-option
-            v-for="item in select_workshop_list"
-            :key="item.id"
-            :label="item.name"
-            :value="item.id">
-            </el-option>
-        </el-select>
-          <el-select    v-model="select_loop" clearable filterable placeholder="请选择车间">
-            <el-option
-            v-for="item in select_loop_list"
-            :key="item.id"
-            :label="item.name"
-            :value="item.id">
-            </el-option>
-        </el-select>
-          <el-button @click="searchRole" type="primary">搜索</el-button>
-    </sticky> -->
     <section style="display: flex;justify-content: space-between;align-items: center;">
       <ul class="search-bar">
       <li>
-        <el-input clearable @keyup.enter.native="searchRole"  v-model="search.username" placeholder="请输入用户名"></el-input>
+        <el-input clearable @keyup.enter.native="searchRole"  v-model="search.username" :placeholder="$t('loopdata.loop')"></el-input>
       </li>
        <li>
-            <el-select  @change="selectWorkChange"  clearable v-model="search.workshop_id" filterable placeholder="请选择厂区">
+            <el-select  @change="selectWorkChange"  clearable v-model="search.workshop_id" filterable :placeholder="$t('loopdata.plant')">
             <el-option
             v-for="item in select_workshop_list"
             :key="item.id"
@@ -36,7 +16,7 @@
         </el-select>
       </li>
        <li>
-            <el-select    v-model="select_loop" clearable filterable placeholder="请选择车间">
+            <el-select    v-model="select_loop" clearable filterable :placeholder="$t('loopdata.workshop')">
             <el-option
             v-for="item in select_loop_list"
             :key="item.id"
@@ -46,11 +26,11 @@
         </el-select>
       </li>
       <li>
-        <el-button @click="searchRole" type="primary">搜索</el-button>
+        <el-button @click="searchRole" type="primary">{{$t('loopdata.search')}}</el-button>
       </li>
     </ul>
     <div>
-       <el-button @click="getData" type="primary">导出数据</el-button>
+       <el-button @click="getData" type="primary">{{$t('loopdata.export')}}</el-button>
     </div>
     </section>
     <!-- Note that row-key is necessary to get a correct row order. -->
@@ -61,12 +41,12 @@
         </template>
       </el-table-column>
       <!-- username -->
-      <el-table-column align="center" label="回路名称" >
+      <el-table-column align="center" :label="$t('loopdata.loopname')" >
         <template slot-scope="scope">
             <span>{{scope.row.loop_name}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="车间名称" >
+      <el-table-column align="center" :label="$t('loopdata.workshopname')" >
         <template slot-scope="scope">
             <span>{{scope.row.name}}</span>
         </template>
@@ -74,7 +54,7 @@
 
        <el-table-column
       fixed="right"
-      label="操作"
+      :label="$t('loopdata.operation')"
       align="center"
       width="100">
       <template slot-scope="scope">

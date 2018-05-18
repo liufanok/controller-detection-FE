@@ -1,9 +1,9 @@
 <template>
   <div class="app-container calendar-list-container">
     <div class="plant-search">
-      <el-input @change='selectPlantName' size="mini" placeholder="请输入厂区名" v-model="name">
+      <el-input @change='selectPlantName' size="mini" :placeholder="$t('plant.plant')" v-model="name">
       </el-input>
-      <el-button @click="plantAdd" size="mini" type="primary" icon="el-icon-plus">增加厂区</el-button>
+      <el-button @click="plantAdd" size="mini" type="primary" icon="el-icon-plus">{{$t('plant.add')}}</el-button>
     </div>
     <!-- Note that row-key is necessary to get a correct row order. -->
     <el-table :data="list" row-key="id" v-loading.body="listLoading" border fit highlight-current-row style="width: 100%">
@@ -13,13 +13,13 @@
 </template>
       </el-table-column>
 
-      <el-table-column  align="center" label="name">
+      <el-table-column  align="center" :label="$t('plant.name')">
 <template slot-scope="scope">
   <span>{{scope.row.name}}</span>
 </template>
       </el-table-column>
 
-      <el-table-column   align="center" label="车间数量">
+      <el-table-column   align="center" :label="$t('plant.num')">
 <template slot-scope="scope">
   <div>
     <span style="font-weight: bold;display: inline-block;width: 30px;">{{scope.row.workshop_count}}</span> &nbsp; &nbsp; &nbsp;
@@ -27,42 +27,9 @@
   </div>
 </template>
       </el-table-column>
-
-      <!-- <el-table-column width="110px" align="center" label="Author">
-<template slot-scope="scope">
-  <span>{{scope.row.author}}</span>
-</template>
-      </el-table-column> -->
-
-      <!-- <el-table-column width="100px" label="Importance">
-<template slot-scope="scope">
-  <svg-icon v-for="n in +scope.row.importance" icon-class="star" class="icon-star" :key="n">
-  </svg-icon>
-</template>
-      </el-table-column> -->
-
-      <!-- <el-table-column align="center" label="Readings" width="95">
-<template slot-scope="scope">
-  <span>{{scope.row.pageviews}}</span>
-</template>
-      </el-table-column> -->
-
-      <!-- <el-table-column class-name="status-col" label="Status" width="110">
-<template slot-scope="scope">
-  <el-tag :type="scope.row.status | statusFilter">
-    {{scope.row.status}}</el-tag>
-</template>
-      </el-table-column> -->
-
-      <!-- <el-table-column align="center" label="Drag" >
-<template slot-scope="scope">
-  <svg-icon class='drag-handler' icon-class="drag">
-  </svg-icon>
-</template>
-      </el-table-column> -->
          <el-table-column
       fixed="right"
-      label="操作"
+      :label="$t('plant.operation')"
       align="center"
       width="200">
 <template slot-scope="scope">
@@ -71,9 +38,6 @@
 </template>
     </el-table-column>
     </el-table>
-    <!-- $t is vue-i18n global function to translate lang (lang in @/lang)  -->
-    <!-- <div class='show-d'>{{$t('table.dragTips1')}} : &nbsp; {{ oldList}}</div>
-    <div class='show-d'>{{$t('table.dragTips2')}} : {{newList}}</div> -->
     <div class="plant-pagination">
           <el-pagination
       @size-change="handleSizeChange"
@@ -87,14 +51,14 @@
     </div>
 
     <el-dialog
-  :title="dialogstatus=='add'?'增加厂区':'编辑厂区'"
+  :title="dialogstatus=='add'?this.$t('plant.add'):this.$t('plant.edit')"
   :visible.sync="dialogVisible"
   width="30%"
   :before-close="dialogCancel">
- <el-input v-model="edit_name" placeholder="请输入厂区名"></el-input>
+ <el-input v-model="edit_name" :placeholder="$t('plant.plant')"></el-input>
   <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogCancel">取 消</el-button>
-    <el-button type="primary" @click="dialogOk">确 定</el-button>
+    <el-button @click="dialogCancel">{{$t('plant.cancel')}}</el-button>
+    <el-button type="primary" @click="dialogOk">{{$t('plant.sure')}}</el-button>
   </span>
 </el-dialog>
 
@@ -140,17 +104,6 @@
     },
     created() {
       this.getList(this.name, this.listQuery.page, this.listQuery.limit)
-      // this.getList('', this.listQuery.page, this.listQuery.limit).then(res => {
-      //   this.listLoading = false
-      //   this.list = res.data.data.data
-      //   this.total = res.data.data.total
-      //   this.oldList = this.list.map(v => v.id)
-      //   this.newList = this.oldList.slice()
-      //   this.$nextTick(() => {
-      //     this.setSort()
-      //   })
-      //   console.log(this.list)
-      // })
     },
     methods: {
       workShop(val) {
@@ -189,7 +142,7 @@
           this.getList(this.name, 1, this.listQuery.limit)
           this.$message({
             type: 'success',
-            message: '更新成功!'
+            message: this.$t('plant.success')
           })
           this.dialogVisible = false
         })
@@ -201,9 +154,9 @@
         this.dialogstatus = 'edit'
       },
       plantDelete(val) {
-        this.$confirm('此操作将永久删除, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm(this.$t('plant.content'), this.$t('plant.tip'), {
+          confirmButtonText: this.$t('plant.sure'),
+          cancelButtonText: this.$t('plant.cancel'),
           type: 'warning'
         }).then(() => {
           request({
@@ -216,13 +169,13 @@
             this.getList(this.name, 1, this.listQuery.limit)
             this.$message({
               type: 'success',
-              message: '删除成功!'
+              message: this.$t('plant.delete')
             })
           })
         }).catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消删除'
+            message: this.$t('plant.deletecancel')
           })
         })
       },

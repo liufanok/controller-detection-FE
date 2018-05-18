@@ -49,14 +49,14 @@ export default {
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!value) {
-        callback(new Error('用户名不能为空'))
+        callback(new Error(this.$t('login.username')))
       } else {
         callback()
       }
     }
     const validatePassword = (rule, value, callback) => {
       if (value.length < 8) {
-        callback(new Error('密码不能少于8位'))
+        callback(new Error(this.$t('login.password')))
       } else {
         callback()
       }

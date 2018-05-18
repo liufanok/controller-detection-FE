@@ -19,7 +19,7 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">{{$t('home.role')}}</div>
-          <div style="font-size:20px;">{{roles[0]=='admin'?'管理员':'普通用户'}}</div>
+          <div style="font-size:20px;">{{roles[0]=='admin'?this.$t('home.admin'):this.$t('home.normal')}}</div>
           <!-- <count-to class="card-panel-num" :startVal="0" :endVal="81212" :duration="3000"></count-to> -->
         </div>
       </div>
