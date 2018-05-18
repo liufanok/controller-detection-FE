@@ -3,8 +3,8 @@
     <el-row>
       <el-col :span="12">
         <h1 class="text-jumbo text-ginormous">Oops!</h1>
-        <h2>暂无数据</h2>
-        <h6>请选择日期和时间段之后查看报告</h6>
+        <h2>{{$t('error.data')}}</h2>
+        <h6>{{$t('error.content')}}</h6>
       </el-col>
       <el-col :span="12">
         <img :src="errGif" width="313" height="428" alt="Girl has dropped her ice cream.">

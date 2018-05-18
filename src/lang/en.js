@@ -42,6 +42,10 @@ export default {
         delete: 'Delete Success!',
         deletecancel: 'Cancel Successfully!',
     },
+    error: {
+        data: 'No Data',
+        content: 'Please select the date and time period to view the report'
+    },
   navbar: {
     logOut: 'Log Out',
     dashboard: 'Home',

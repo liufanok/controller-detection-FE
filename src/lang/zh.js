@@ -42,6 +42,10 @@ export default {
         delete: '删除成功！',
         deletecancel: '已取消删除',
     },
+    error: {
+      data: '暂无数据',
+        content: '请选择日期和时间段之后查看报告'
+    },
   navbar: {
     logOut: '退出登录',
     dashboard: '首页',
