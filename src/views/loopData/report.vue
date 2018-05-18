@@ -3,11 +3,11 @@
         <sticky className="sub-navbar published">
             <el-date-picker value-format="yyyy-MM-dd" v-model="value_date" type="date" @change="valueDateChange" placeholder="选择日期">
             </el-date-picker>
-            <el-select v-model="select_date" filterable placeholder="时间段">
+            <el-select v-model="select_date" filterable :placeholder="$t('data.scope')">
                 <el-option v-for="(index,item) in select_date_list" :key="index" :label="item" :value="index">
                 </el-option>
             </el-select>
-            <el-button v-loading="btn_loading" style="margin-left: 10px;" type="success" @click="getReportList">查看报告</el-button>
+            <el-button v-loading="btn_loading" style="margin-left: 10px;" type="success" @click="getReportList">{{$t('data.loop')}}</el-button>
         </sticky>
         <section v-if="sec_loading">
             <panel-group :paneldata='panelgroup_data'></panel-group>

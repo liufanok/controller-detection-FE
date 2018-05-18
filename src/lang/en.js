@@ -51,6 +51,34 @@ export default {
         belongs: 'Belong',
         operation: 'Operation'
     },
+    user: {
+        add: 'Add User',
+        import: 'Batch Import',
+        username: 'Username',
+        phone: 'Phone',
+        email: 'Email',
+        role: 'Select Role',
+        search: 'Search',
+        username1: 'Username',
+        email1: 'Email',
+        phone1: 'Phone',
+        status: 'Status',
+        status1: 'Regular',
+        status0: 'Forbidden',
+        role1: 'Role',
+        belong: 'Belongs',
+        create: 'Create Time',
+        edit: 'Edit',
+        admin: 'Admin',
+        normal: 'Normal',
+        title: 'Batch Import User',
+        upload: 'Upload File',
+        download: 'Download Template'
+    },
+    data: {
+        scope: 'Period',
+        loop: 'View Report',
+    },
     error: {
         data: 'No Data',
         content: 'Please select the date and time period to view the report'

@@ -1,27 +1,29 @@
 <template>
   <div id="user" class="app-container calendar-list-container">
     <div class="add-role">
-      <el-button @click="handlAddRole" type="primary">新增管理员</el-button>
-      <el-button @click="uploadUser" type="primary">批量导入</el-button>
+      <el-button @click="handlAddRole" type="primary">{{$t('user.add')}}</el-button>
+      <el-button @click="uploadUser" type="primary">{{$t('user.import')}}</el-button>
     </div>
     <ul class="search-bar">
       <li>
-        <el-input clearable @keyup.enter.native="searchRole" v-model="search.username" placeholder="请输入用户名"></el-input>
+        <el-input clearable @keyup.enter.native="searchRole" v-model="search.username" :placeholder="$t('user.username')"></el-input>
       </li>
       <li>
-        <el-input clearable @keyup.enter.native="searchRole" v-model="search.phone" placeholder="请输入用户手机"></el-input>
+        <el-input clearable @keyup.enter.native="searchRole" v-model="search.phone" :placeholder="$t('user.phone')"></el-input>
       </li>
       <li>
-        <el-input clearable @keyup.enter.native="searchRole" v-model="search.email" placeholder="请输入注册邮箱"></el-input>
+        <el-input clearable @keyup.enter.native="searchRole" v-model="search.email" :placeholder="$t('user.email')"></el-input>
       </li>
       <li>
-        <el-select clearable v-model="search.role" filterable placeholder="请选择角色">
-          <el-option v-for="(item,index) in role_list" :key="index" :label="item.label" :value="item.value">
-          </el-option>
+        <el-select clearable v-model="search.role" filterable :placeholder="$t('user.role')">
+          <!--<el-option v-for="(item,index) in role_list" :key="index" :label="item.label" :value="item.value">-->
+          <!--</el-option>-->
+            <el-option value="admin" :label="$t('user.admin')">{{$t('user.admin')}}</el-option>
+            <el-option value="normal" :label="$t('user.normal')">{{$t('user.normal')}}</el-option>
         </el-select>
       </li>
       <li>
-        <el-button @click="searchRole" type="primary">搜索</el-button>
+        <el-button @click="searchRole" type="primary">{{$t('user.search')}}</el-button>
       </li>
     </ul>
     <!-- Note that row-key is necessary to get a correct row order. -->
@@ -32,49 +34,49 @@
 </template>
       </el-table-column>
       <!-- username -->
-      <el-table-column align="center" label="用户名" >
+      <el-table-column align="center" :label="$t('user.username1')" >
 <template slot-scope="scope">
   <span>{{scope.row.username}}</span>
 </template>
       </el-table-column>
-      <el-table-column align="center" label="邮件" >
+      <el-table-column align="center" :label="$t('user.email')" >
 <template slot-scope="scope">
   <span>{{scope.row.email}}</span>
 </template>
       </el-table-column>
-      <el-table-column align="center" label="电话"  width="120">
+      <el-table-column align="center" :label="$t('user.phone')"  width="120">
 <template slot-scope="scope">
   <span>{{scope.row.phone}}</span>
 </template>
       </el-table-column>
-       <el-table-column align="center" label="状态"  width="80">
+       <el-table-column align="center" :label="$t('user.status')"  width="80">
 <template slot-scope="scope">
   <!-- <span>{{scope.row.status}}</span> -->
-  <el-tag v-if="scope.row.status==10" type="success">正常</el-tag>
-  <el-tag v-else type="danger">禁用</el-tag>
+  <el-tag v-if="scope.row.status==10" type="success">{{$t('user.normal')}}</el-tag>
+  <el-tag v-else type="danger">{{$t('user.forbidden')}}</el-tag>
 </template>
       </el-table-column>
       <!-- ？roles -->
-       <el-table-column align="center" label="角色" width="80">
+       <el-table-column align="center" :label="$t('user.role1')" width="80">
 <template slot-scope="scope">
   <span>{{scope.row.roles}}</span>
 </template>
       </el-table-column>
       <!-- create_time -->
       <!-- belong -->
-       <el-table-column align="center" label="所属车间" >
+       <el-table-column align="center" :label="$t('user.belong')" >
 <template slot-scope="scope">
   <span>{{scope.row.belong}}</span>
 </template>
       </el-table-column>
-       <el-table-column align="center" label="创建时间" >
+       <el-table-column align="center" :label="$t('user.create')" >
 <template slot-scope="scope">
   <span>{{scope.row.create_time}}</span>
 </template>
       </el-table-column>
       <el-table-column
       fixed="right"
-      label="操作"
+      :label="$t('loop.operation')"
       align="center"
       width="200">
 <template slot-scope="scope">
@@ -106,50 +108,50 @@
         <!-- 编辑 -->
          <div v-if="dialog.edit">
            <el-dialog
-            title="编辑"
+            :title="$t('user.edit')"
             :visible.sync="dialog.edit"
             :before-close="cancleEdit"
             width="400px"
             center>
             <ul class="dialog-edit">
                <li>
-                   <label for="">用户名</label>
-                    <el-input disabled size="small" placeholder="请输入用户名" v-model="edit.username">
+                   <label for="">{{$t('user.username1')}}</label>
+                    <el-input disabled size="small" :placeholder="$t('user.username')" v-model="edit.username">
                    
                 </el-input>
                </li>
                 <li>
-                   <label for="">手机号</label>
-                    <el-input size="small" placeholder="请输入手机号" v-model="edit.phone">
+                   <label for="">{{$t('user.phone')}}</label>
+                    <el-input size="small" :placeholder="$t('user.phone1')" v-model="edit.phone">
                    
                 </el-input>
                </li>
                 <li>
-                   <label for="">Email</label>
-                  <el-input size="small" placeholder="请输入Email" v-model="edit.email">      
+                   <label for="">{{$t('user.email1')}}</label>
+                  <el-input size="small" :placeholder="$t('user.email')" v-model="edit.email">
                 </el-input>
                </li>
                <li>
                  <!--     active-color="#13ce66"
                     inactive-color="#ff4949" -->
-                   <label for="">账号状态</label>
+                   <label for="">{{$t('user.status')}}</label>
                      <el-switch
                     style="display: block"
                     v-model="edit.status"
                      active-color="#13ce66"
                     inactive-color="#ff4949"
-                    active-text="正常"
-                    inactive-text="禁用">
+                    :active-text="$t('user.status1')"
+                    :inactive-text="$t('user.status0')">
                     </el-switch>
                </li>
                 <li>
-                   <label for="">角色</label>
+                   <label for="">{{$t('user.role1')}}</label>
                      <el-switch
                     style="display: block"
                     v-model="edit.role"
                    
-                    active-text="管理员"
-                    inactive-text="普通">
+                    :active-text="$t('user.admin')"
+                    :inactive-text="$t('user.normal')">
                     </el-switch>
                </li>
             </ul>
@@ -157,20 +159,20 @@
                    
             </div>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="cancleEdit">取 消</el-button>
-                <el-button type="primary" @click="sureEdit">确 定</el-button>
+                <el-button @click="cancleEdit">{{$t('plant.cancel')}}</el-button>
+                <el-button type="primary" @click="sureEdit">{{$t('plant.sure')}}</el-button>
             </span>
             </el-dialog>
     </div>
     <!-- 批量导入 -->
 
 <el-dialog
-  title="批量导入用户"
+  :title="$t('user.title')"
   :visible.sync="uploaddialog"
   width="400"
   :before-close="uploadClose">
           <el-upload :before-upload="zipChange" action="">
-           <el-button type="primary">上传文件<i class="el-icon-upload el-icon--right"></i></el-button><a href="/static/template/批量导入用户.xlsx" download="批量导入用户.xlsx">下载模板</a>
+           <el-button type="primary">{{$t('user.upload')}}<i class="el-icon-upload el-icon--right"></i></el-button><a href="/static/template/批量导入用户.xlsx" download="批量导入用户.xlsx">{{$t('user.download')}}</a>
           </el-upload>
           <div v-if="zip_file !== null">
               <div>
@@ -182,44 +184,44 @@
     <li></li>
   </ul>
   <span slot="footer" class="dialog-footer">
-    <el-button @click="uploadClose">取 消</el-button>
-    <el-button type="primary" @click="uploadOk">确 定</el-button>
+    <el-button @click="uploadClose">{{$t('plant.cancel')}}</el-button>
+    <el-button type="primary" @click="uploadOk">{{$t('plant.sure')}}</el-button>
   </span>
 </el-dialog>
     <!-- 添加 -->
       <div v-if="dialog.add">
            <el-dialog
-            title="添加"
+            :title="$t('user.add')"
             :visible.sync="dialog.add"
             :before-close="cancleEdit"
             width="400px"
             center>
             <ul class="dialog-edit">
                <li>
-                   <label for="">用户名</label>
-                    <el-input  size="small" placeholder="请输入用户名" v-model="add.username">
+                   <label for="">{{$t('user.username1')}}</label>
+                    <el-input  size="small" :placeholder="$t('user.username')" v-model="add.username">
                    
                 </el-input>
                </li>
                 <li>
-                   <label for="">手机号</label>
-                    <el-input size="small" placeholder="请输入手机号" v-model="add.phone">
+                   <label for="">{{$t('user.phone1')}}</label>
+                    <el-input size="small" :placeholder="$t('user.phone')" v-model="add.phone">
                    
                 </el-input>
                </li>
                 <li>
-                   <label for="">Email</label>
-                  <el-input size="small" placeholder="请输入Email" v-model="add.email">      
+                   <label for="">{{$t('user.email1')}}</label>
+                  <el-input size="small" :placeholder="$t('user.email')" v-model="add.email">
                 </el-input>
                </li>
                 <li>
-                   <label for="">角色</label>
+                   <label for="">{{$t('user.role')}}</label>
                      <el-switch
                     style="display: block"
                     v-model="add.role"
                    
-                    active-text="管理员"
-                    inactive-text="普通">
+                    :active-text="$t('user.admin')"
+                    :inactive-text="$t('user.normal')">
                     </el-switch>
                </li>
             </ul>
@@ -227,8 +229,8 @@
                    
             </div>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="cancleAdd">取 消</el-button>
-                <el-button type="primary" @click="sureAdd">确 定</el-button>
+                <el-button @click="cancleAdd">{{$t('plant.cancel')}}</el-button>
+                <el-button type="primary" @click="sureAdd">{{$t('plant.sure')}}</el-button>
             </span>
             </el-dialog>
     </div>
