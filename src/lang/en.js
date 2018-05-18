@@ -14,24 +14,24 @@ export default {
     role: 'Role',
     email: 'Email',
     lastLogin: 'Last Login At',
-      admin: 'admin',
-      normal: 'normal'
+      admin: 'Admin',
+      normal: 'Normal'
   },
     loopdata: {
-        loop: 'Loop name',
-        plant: 'Select plant',
-        workshop: 'Select workshop',
+        loop: 'Loop Name',
+        plant: 'Select Plant',
+        workshop: 'Select Workshop',
         search: 'Search',
-        export: 'Export data',
-        loopname: 'Loop name',
+        export: 'Export Data',
+        loopname: 'Loop Name',
         workshopname: 'Workshop Name',
         operation: 'Operation'
     },
     plant: {
         plant: 'Plant Name',
-        add: 'Add plant',
-        name: 'Plant name',
-        num: 'Workshop Number',
+        add: 'Add Plant',
+        name: 'Plant Name',
+        num: 'Number of Workshops',
         operation: 'Operation',
         edit: 'Edit Plant',
         sure: 'Sure',
@@ -42,9 +42,28 @@ export default {
         delete: 'Delete Success!',
         deletecancel: 'Cancel Successfully!',
     },
+    loop: {
+        loop: 'Loop Name',
+        add: 'Add Loop',
+        edit: 'Edit Loop',
+        name: 'Name',
+        belong: 'Belongs Workshop',
+        belongs: 'Belong',
+        operation: 'Operation'
+    },
     error: {
         data: 'No Data',
         content: 'Please select the date and time period to view the report'
+    },
+    workshop: {
+        workshop: 'Workshop Name',
+        add: 'Add Workshop',
+        edit: 'Edit Workshop',
+        name: 'Workshop Name',
+        belong: 'Belongs Plant',
+        loopnum: 'Number of Loops',
+        plant: 'Select Plant',
+        selectworkshop: 'Select Workshop'
     },
   navbar: {
     logOut: 'Log Out',

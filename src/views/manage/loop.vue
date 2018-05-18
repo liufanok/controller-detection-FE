@@ -1,9 +1,9 @@
 <template>
     <div id="loop" class="app-container calendar-list-container">
         <div class="plant-search">
-            <el-input @change='selectPlantName' size="mini" placeholder="请输入回路名" v-model="name">
+            <el-input @change='selectPlantName' size="mini" :placeholder="$t('loop.loop')" v-model="name">
             </el-input>
-            <el-button @click="plantAdd" size="mini" type="primary" icon="el-icon-plus">增加回路</el-button>
+            <el-button @click="plantAdd" size="mini" type="primary" icon="el-icon-plus">{{$t('loop.add')}}</el-button>
         </div>
         <!-- Note that row-key is necessary to get a correct row order. -->
         <el-table :data="list" row-key="id" v-loading.body="listLoading" border fit highlight-current-row style="width: 100%">
@@ -12,19 +12,19 @@
                   <span>{{scope.row.id}}</span>
 </template>
       </el-table-column>
-          <el-table-column  align="center" label="回路名">
+          <el-table-column  align="center" :label="$t('loop.name')">
 <template slot-scope="scope">
     <span>{{scope.row.loop_name}}</span>
 </template>
       </el-table-column>
-      <el-table-column  align="center" label="所属车间">
+      <el-table-column  align="center" :label="$t('loop.belong')">
 <template slot-scope="scope">
     <span>{{scope.row.name}}</span>
 </template>
       </el-table-column>
          <el-table-column
       fixed="right"
-      label="操作"
+      :label="$t('loop.operation')"
       align="center"
       width="200">
 <template slot-scope="scope">
@@ -49,21 +49,21 @@
     </div>
 
     <el-dialog
-  :title="dialogstatus=='add'?'增加回路':'编辑回路'"
+  :title="dialogstatus=='add'?this.$t('loop.add'):this.$t('loop.edit')"
   :visible.sync="dialogVisible"
   width="500px"
   :before-close="dialogCancel">
   <section style="display: flex;
     align-items: center;">
-      <span style=" width: 70px;display: block;">回路名：</span>
-       <el-input v-model="edit_name" placeholder="请输入回路名"></el-input>
+      <span style=" width: 70px;display: block;">{{$t('loop.name')}}：</span>
+       <el-input v-model="edit_name" :placeholder="$t('loop.loop')"></el-input>
   </section>
   <section style="display: flex;justify-content: flex-start; align-items: center;margin-top:20px;">
      <div v-if="dialogstatus=='edit'&&select_work"  style="display: flex;align-items: center;margin-right: 20px;">
 
-        <div>所属厂区：</div>
+        <div>{{$t('loop.belongs')}}：</div>
       
-          <el-select @change="selectWorkChange" v-if="dialogstatus=='edit'" v-model="select_work" filterable placeholder="请选择厂区">
+          <el-select @change="selectWorkChange" v-if="dialogstatus=='edit'" v-model="select_work" filterable :placeholder="$t('loopdata.plant')">
     <el-option
       v-for="item in select_work_list"
       :key="item.id"
@@ -72,7 +72,7 @@
     </el-option>
   </el-select>
   </div>
-  <el-select v-if="dialogstatus=='edit'"   v-model="select_loop" filterable placeholder="请选择车间">
+  <el-select v-if="dialogstatus=='edit'"   v-model="select_loop" filterable :placeholder="$t('loopdata.workshop')">
             <el-option
             v-for="item in select_loop_list"
             :key="item.id"
@@ -84,8 +84,8 @@
   
     </section>
   <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogCancel">取 消</el-button>
-    <el-button type="primary" @click="dialogOk">确 定</el-button>
+    <el-button @click="dialogCancel">{{$t('plant.cancel')}}</el-button>
+    <el-button type="primary" @click="dialogOk">{{$t('plant.sure')}}</el-button>
   </span>
 </el-dialog>
 
@@ -187,7 +187,7 @@
             this.getList(this.name, 1, this.listQuery.limit)
             this.$message({
               type: 'success',
-              message: '更新成功!'
+              message: this.$t('plant.success')
             })
             this.dialogVisible = false
           })
@@ -225,9 +225,9 @@
           })
         },
         plantDelete(val) {
-          this.$confirm('此操作将永久删除, 是否继续?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
+          this.$confirm(this.$t('plant.content'), this.$t('plant.tip'), {
+            confirmButtonText: this.$t('plant.sure'),
+            cancelButtonText: this.$t('plant.cancel'),
             type: 'warning'
           }).then(() => {
             request({
@@ -239,13 +239,13 @@
             }).then(res => {
               this.$message({
                 type: 'success',
-                message: '删除成功!'
+                message: this.$t('plant.delete')
               })
             })
           }).catch(() => {
             this.$message({
               type: 'info',
-              message: '已取消删除'
+              message: this.$t('plant.deletecancel')
             })
           })
         },

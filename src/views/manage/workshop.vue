@@ -5,10 +5,10 @@
                             <el-input
                             @change='selectPlantName'
                                 size="mini"
-                                placeholder="请输入车间名"
+                                :placeholder="$t('workshop.workshop')"
                                 v-model="name">
                             </el-input>
-                        <el-button @click="plantAdd"  size="mini" type="primary" icon="el-icon-plus">增加车间</el-button>
+                        <el-button @click="plantAdd"  size="mini" type="primary" icon="el-icon-plus">{{$t('workshop.add')}}</el-button>
          </div>
     
       
@@ -22,20 +22,20 @@
         </template>
       </el-table-column>
 
-      <el-table-column  align="center" label="车间名">
+      <el-table-column  align="center" :label="$t('workshop.name')">
         <template slot-scope="scope">
           <span>{{scope.row.name}}</span>
         </template>
       </el-table-column>
     <!-- plant_name -->
-    <el-table-column  align="center" label="所属厂区">
+    <el-table-column  align="center" :label="$t('workshop.belong')">
         <template slot-scope="scope">
           <span>{{scope.row.plant_name}}</span>
         </template>
       </el-table-column>
 
 
-      <el-table-column   align="center" label="回路数量">
+      <el-table-column   align="center" :label="$t('workshop.loopnum')">
         <template slot-scope="scope">
          <div> 
              <span style="font-weight: bold;display: inline-block;width: 30px;">{{scope.row.loop_count}}</span>
@@ -44,39 +44,9 @@
           </div>
         </template>
       </el-table-column>
-
-      <!-- <el-table-column width="110px" align="center" label="Author">
-        <template slot-scope="scope">
-          <span>{{scope.row.author}}</span>
-        </template>
-      </el-table-column> -->
-
-      <!-- <el-table-column width="100px" label="Importance">
-        <template slot-scope="scope">
-          <svg-icon v-for="n in +scope.row.importance" icon-class="star" class="icon-star" :key="n"></svg-icon>
-        </template>
-      </el-table-column> -->
-
-      <!-- <el-table-column align="center" label="Readings" width="95">
-        <template slot-scope="scope">
-          <span>{{scope.row.pageviews}}</span>
-        </template>
-      </el-table-column> -->
-
-      <!-- <el-table-column class-name="status-col" label="Status" width="110">
-        <template slot-scope="scope">
-          <el-tag :type="scope.row.status | statusFilter">{{scope.row.status}}</el-tag>
-        </template>
-      </el-table-column> -->
-
-      <!-- <el-table-column align="center" label="Drag" >
-        <template slot-scope="scope">
-          <svg-icon class='drag-handler' icon-class="drag"></svg-icon>
-        </template>
-      </el-table-column> -->
          <el-table-column
       fixed="right"
-      label="操作"
+      :label="$t('plant.operation')"
       align="center"
       width="200">
       <template slot-scope="scope">
@@ -101,13 +71,13 @@
     </div>
 
     <el-dialog
-  :title="dialogstatus=='add'?'增加车间':'编辑车间'"
+  :title="dialogstatus=='add'?this.$t('workshop.add'):this.$t('workshop.edit')"
   :visible.sync="dialogVisible"
   width="30%"
   :before-close="dialogCancel">
- <el-input v-model="edit_name" placeholder="请输入车间名"></el-input>
+ <el-input v-model="edit_name" :placeholder="$t('workshop.workshop')"></el-input>
  <div style="margin-bottom:20px;"></div>
-  <el-select v-if="dialogstatus=='edit'" v-model="select_work" filterable placeholder="请选择厂区">
+  <el-select v-if="dialogstatus=='edit'" v-model="select_work" filterable :placeholder="$t('workshop.plant')">
     <el-option
       v-for="item in select_work_list"
       :key="item.id"
@@ -116,8 +86,8 @@
     </el-option>
   </el-select>
   <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogCancel">取 消</el-button>
-    <el-button type="primary" @click="dialogOk">确 定</el-button>
+    <el-button @click="dialogCancel">{{$t('plant.cancel')}}</el-button>
+    <el-button type="primary" @click="dialogOk">{{$t('plant.sure')}}</el-button>
   </span>
 </el-dialog>
 
@@ -217,7 +187,7 @@ export default {
         this.getList(this.name, 1, this.listQuery.limit)
         this.$message({
           type: 'success',
-          message: '更新成功!'
+          message: this.$t('plant.success')
         })
         this.dialogVisible = false
       })
@@ -238,9 +208,9 @@ export default {
       })
     },
     plantDelete(val) {
-      this.$confirm('此操作将永久删除, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('plant.content'), this.$t('plant.tip'), {
+        confirmButtonText: this.$t('plant.sure'),
+        cancelButtonText: this.$t('plant.cancel'),
         type: 'warning'
       }).then(() => {
         request({
@@ -253,13 +223,13 @@ export default {
           this.getList(this.name, 1, this.listQuery.limit)
           this.$message({
             type: 'success',
-            message: '删除成功!'
+            message: this.$t('plant.delete')
           })
         })
       }).catch(() => {
         this.$message({
           type: 'info',
-          message: '已取消删除'
+          message: this.$t('plant.deletecancel')
         })
       })
     },

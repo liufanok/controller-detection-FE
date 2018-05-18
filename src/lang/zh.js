@@ -42,6 +42,25 @@ export default {
         delete: '删除成功！',
         deletecancel: '已取消删除',
     },
+    workshop: {
+      workshop: '请输入车间名',
+        add: '增加车间',
+        edit: '编辑车间',
+        name: '车间名称',
+        belong: '所属厂区',
+        loopnum: '回路数量',
+        plant: '请选择厂区',
+        selectworkshop: '请选择车间'
+    },
+    loop: {
+      loop: '请输入回路名',
+        add: '增加回路',
+        edit: '编辑回路',
+        name: '回路名',
+        belong: '所属车间',
+        belongs: '所属车间',
+        operation: '操作',
+    },
     error: {
       data: '暂无数据',
         content: '请选择日期和时间段之后查看报告'
