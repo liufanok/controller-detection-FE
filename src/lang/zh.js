@@ -23,7 +23,7 @@ export default {
         plant: '请选择厂区',
         workshop: '请选择车间',
         search: '搜索',
-        export: '导出数据',
+        export: '导出全部数据',
         loopname: '回路名',
         workshopname: '所属车间',
         operation: '操作'

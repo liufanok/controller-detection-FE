@@ -237,6 +237,7 @@
                 id: val.id
               })
             }).then(res => {
+              this.getList(this.name, 1, this.listQuery.limit)
               this.$message({
                 type: 'success',
                 message: this.$t('plant.delete')
