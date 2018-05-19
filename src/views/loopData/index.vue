@@ -30,7 +30,7 @@
       </li>
     </ul>
     <div>
-       <el-button @click="getData" type="primary">{{$t('loopdata.export')}}</el-button>
+        <el-button @click="getData" type="primary"><a href="/api/v1/loops/export" download="">{{$t('loopdata.export')}}</a></el-button>
     </div>
     </section>
     <!-- Note that row-key is necessary to get a correct row order. -->
