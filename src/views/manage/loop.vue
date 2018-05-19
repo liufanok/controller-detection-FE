@@ -163,34 +163,41 @@
           this.dialogVisible = false
         },
         dialogOk(val) {
-          let url = ''
-          let data = ''
-          if (this.dialogstatus === 'add') {
-            url = '/api/v1/loops/add-loop'
-            data = qs.stringify({
-              workshop_id: JSON.parse(window.localStorage.getItem('loop')).id,
-              name: this.edit_name
-            })
-          } else {
-            url = '/api/v1/loops/update-loop'
-            data = qs.stringify({
-              id: this.edit_id,
-              workshop_id: this.select_loop,
-              name: this.edit_name
-            })
-          }
-          request({
-            url: url,
-            method: 'post',
-            data: data
-          }).then(res => {
-            this.getList(this.name, 1, this.listQuery.limit)
-            this.$message({
-              type: 'success',
-              message: this.$t('plant.success')
-            })
-            this.dialogVisible = false
-          })
+            if (this.edit_name.length < 1) {
+                this.$message({
+                    type: 'error',
+                    message: this.$t('plant.notnull')
+                })
+            } else {
+                let url = ''
+                let data = ''
+                if (this.dialogstatus === 'add') {
+                    url = '/api/v1/loops/add-loop'
+                    data = qs.stringify({
+                        workshop_id: JSON.parse(window.localStorage.getItem('loop')).id,
+                        name: this.edit_name
+                    })
+                } else {
+                    url = '/api/v1/loops/update-loop'
+                    data = qs.stringify({
+                        id: this.edit_id,
+                        workshop_id: this.select_loop,
+                        name: this.edit_name
+                    })
+                }
+                request({
+                    url: url,
+                    method: 'post',
+                    data: data
+                }).then(res => {
+                    this.getList(this.name, 1, this.listQuery.limit)
+                    this.$message({
+                        type: 'success',
+                        message: this.$t('plant.success')
+                    })
+                    this.dialogVisible = false
+                })
+            }
         },
         selectWorkChange(val) {
           this.getAllLoop()

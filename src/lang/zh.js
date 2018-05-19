@@ -42,6 +42,7 @@ export default {
         success: '更新成功！',
         delete: '删除成功！',
         deletecancel: '已取消删除',
+        notnull: '不能为空'
     },
     workshop: {
       workshop: '请输入车间名',

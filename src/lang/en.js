@@ -42,6 +42,7 @@ export default {
         success: 'Update Success!',
         delete: 'Delete Success!',
         deletecancel: 'Cancel Successfully!',
+        notnull: 'Can not be empty'
     },
     loop: {
         loop: 'Loop Name',

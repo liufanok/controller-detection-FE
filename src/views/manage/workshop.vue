@@ -163,6 +163,12 @@ export default {
       this.dialogVisible = false
     },
     dialogOk(val) {
+        if (this.edit_name.length < 1) {
+            this.$message({
+                type: 'error',
+                message: this.$t('plant.notnull')
+            })
+        } else {
       let url = ''
       let data = ''
       if (this.dialogstatus === 'add') {
@@ -191,6 +197,7 @@ export default {
         })
         this.dialogVisible = false
       })
+        }
     },
     handleEdit(val) {
       this.edit_id = val.id

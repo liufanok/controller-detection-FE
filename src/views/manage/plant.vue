@@ -120,32 +120,39 @@
         this.dialogVisible = false
       },
       dialogOk(val) {
-        let url = ''
-        let data = ''
-        if (this.dialogstatus === 'add') {
-          url = '/api/v1/plant/add-plant '
-          data = qs.stringify({
-            name: this.edit_name
-          })
+        if (this.edit_name.length < 1) {
+            this.$message({
+                type: 'error',
+                message: this.$t('plant.notnull')
+            })
         } else {
-          url = '/api/v1/plant/update-plant'
-          data = qs.stringify({
-            id: this.edit_id,
-            name: this.edit_name
-          })
+            let url = ''
+            let data = ''
+            if (this.dialogstatus === 'add') {
+                url = '/api/v1/plant/add-plant '
+                data = qs.stringify({
+                    name: this.edit_name
+                })
+            } else {
+                url = '/api/v1/plant/update-plant'
+                data = qs.stringify({
+                    id: this.edit_id,
+                    name: this.edit_name
+                })
+            }
+            request({
+                url: url,
+                method: 'post',
+                data: data
+            }).then(res => {
+                this.getList(this.name, 1, this.listQuery.limit)
+                this.$message({
+                    type: 'success',
+                    message: this.$t('plant.success')
+                })
+                this.dialogVisible = false
+            })
         }
-        request({
-          url: url,
-          method: 'post',
-          data: data
-        }).then(res => {
-          this.getList(this.name, 1, this.listQuery.limit)
-          this.$message({
-            type: 'success',
-            message: this.$t('plant.success')
-          })
-          this.dialogVisible = false
-        })
       },
       handleEdit(val) {
         this.edit_id = val.id
