@@ -189,6 +189,7 @@
            </div>
        </section>
   <ul v-if="upload_error_msg">
+      共有{{total}}条数据，其中正确：{{success}}条，失败{{failed}}条，失败信息如下:
     <li :key="index" v-for="(item,index) in failed_list">
         {{item}}
     </li>
@@ -325,7 +326,9 @@
           select_loop_list:[],
           select_loop:'',
           select_work:'',
-        //
+         success: '',
+          failed: '',
+          all: '',
           failed_list:[],
           upload_error_msg: false,
         loadingStatus: false,
@@ -423,7 +426,11 @@
           }).then(res => {
             if (res.data.code == 0) {
               // this.dialog.add = false
+                this.getUserList(this.search.limit, 1)
                 this.failed_list = res.data.data.failed.failed_info
+                this.success = res.data.data.success_num
+                this.failed = res.data.data.failed.num
+                this.total = res.data.data.total
                 this.upload_error_msg = true
               this.$message({
                 type: 'success',
@@ -497,7 +504,6 @@
                     workshop_name:'',
                 })
             }
-            console.log(this.belong_list.length,this.belong_list)
             this.disabled_index4 = this.belong_list.length-1
 
 
