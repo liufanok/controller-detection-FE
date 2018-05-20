@@ -172,20 +172,29 @@
   :visible.sync="uploaddialog"
   width="400"
   :before-close="uploadClose">
-          <el-upload :before-upload="zipChange" action="">
-           <el-button type="primary">{{$t('user.upload')}}<i class="el-icon-upload el-icon--right"></i></el-button><a href="/static/template/批量导入用户.xlsx" download="批量导入用户.xlsx">{{$t('user.download')}}</a>
-          </el-upload>
-          <div v-if="zip_file !== null">
-              <div>
-                <el-tag type="border">上传文件名：{{ zip_file.name }}</el-tag>
-                <el-button type="primary" size='small' @click="zipUpload" :loading="loadingStatus">{{ loadingStatus ? '上传中' : '点击上传' }}</el-button>
-              </div>
-          </div>
-  <ul>
-    <li></li>
+       <section v-if="!upload_error_msg">
+           <div style="display: flex; align-items: center;">
+               <el-upload :before-upload="zipChange" action="">
+                   <el-button type="primary">{{$t('user.upload')}}<i class="el-icon-upload el-icon--right"></i></el-button>
+
+               </el-upload>
+               <a href="/api/v1/user/template" download="" style="padding-left: 10px">{{$t('user.download')}}</a>
+           </div>
+
+           <div v-if="zip_file !== null">
+               <div>
+                   <el-tag type="border">上传文件名：{{ zip_file.name }}</el-tag>
+                   <!--<el-button type="primary" size='small' @click="zipUpload" :loading="loadingStatus">{{ loadingStatus ? '上传中' : '点击上传' }}</el-button>-->
+               </div>
+           </div>
+       </section>
+  <ul v-if="upload_error_msg">
+    <li :key="index" v-for="(item,index) in failed_list">
+        {{item}}
+    </li>
   </ul>
   <span slot="footer" class="dialog-footer">
-    <el-button @click="uploadClose">{{$t('plant.cancel')}}</el-button>
+    <!--<el-button @click="uploadClose">{{$t('plant.cancel')}}</el-button>-->
     <el-button type="primary" @click="uploadOk">{{$t('plant.sure')}}</el-button>
   </span>
 </el-dialog>
@@ -194,7 +203,7 @@
            <el-dialog
             :title="$t('user.add')"
             :visible.sync="dialog.add"
-            :before-close="cancleEdit"
+            :before-close="cancleAdd"
             width="400px"
             center>
             <ul class="dialog-edit">
@@ -235,6 +244,57 @@
             </span>
             </el-dialog>
     </div>
+
+      <!-- 分配厂区-->
+      <el-dialog
+              :title="$t('user.dis')"
+              :visible.sync="dialogVisible4"
+              width="500px"
+              :before-close="dialogCancel4">
+          <!--// belong_list-->
+          <div style="display: flex; justify-content: center;">
+              <el-button icon="el-icon-plus" type="primary" round @click="belongAdd4">{{$t('user.add1')}}</el-button>
+          </div>
+          <ul style="    padding: 0; margin: 0;">
+              <li :key="index" v-for="(item,index) in belong_list">
+                  <section style="display: flex;justify-content: flex-start; align-items: center;margin-top:20px;">
+                      <div style="display: flex;align-items: center;margin-right: 20px;">
+
+
+                          <el-select size="mini" :disabled="disabled_index4==index?false:true" @change="selectWorkChange"  v-model="item.plant_id" filterable :placeholder="$t('loopdata.plant')">
+                              <el-option
+                                      v-for="item in select_work_list"
+                                      :key="item.id"
+                                      :label="item.name"
+                                      :value="item.id">
+                              </el-option>
+                          </el-select>
+                      </div>
+                      <el-select size="mini" :disabled="disabled_index4==index?false:true" @change="selectLoopChange"  v-model="item.workshop_id" filterable :placeholder="$t('loopdata.workshop')">
+                          <el-option
+                                  v-for="item in item.workshop_list"
+                                  :key="item.id"
+                                  :label="item.name"
+                                  :value="item.id">
+                          </el-option>
+                      </el-select>
+                      <div style="    display: flex; padding-left: 20px;">
+                          <el-button type="primary" size="mini" :icon="disabled_index4!==index?'el-icon-edit':'el-icon-check'" @click="belongEdit4(index)"></el-button>
+                          <el-button type="primary" size="mini" icon="el-icon-delete" @click="belongdelete4(index)"></el-button>
+                      </div>
+
+                      <!--<el-button @click="handleEdit(scope.row)" type="primary" size="mini" icon="el-icon-edit"> </el-button>-->
+                      <!--<el-button @click="plantDelete(scope.row)" type="primary" size="mini" icon="el-icon-delete"></el-button>-->
+                  </section>
+              </li>
+          </ul>
+
+          <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogCancel4">{{$t('plant.cancel')}}</el-button>
+    <el-button type="primary" @click="dialogOk4">{{$t('plant.sure')}}</el-button>
+  </span>
+      </el-dialog>
+      <!--==-->
   </div>
 </template>
 
@@ -255,7 +315,19 @@
     name: 'user',
     data() {
       return {
+          // 厂区分配
+          user_id:'',
+          disabled_index4:null,
+          belong_list:[],
+          belong_list_2:[],
+          dialogVisible4:false,
+          select_work_list:[],
+          select_loop_list:[],
+          select_loop:'',
+          select_work:'',
         //
+          failed_list:[],
+          upload_error_msg: false,
         loadingStatus: false,
         zipfile: null,
         zip_file: null,
@@ -263,6 +335,7 @@
         // ==
         role_list: ROLE,
         search: {
+            current_page:1,
           username: '',
           phone: '',
           email: '',
@@ -314,17 +387,22 @@
     },
     created() {
       this.getUserList()
+        this.getAllPlant()
     },
     methods: {
       // 文件上传前
       // 文件上传前
       zipChange(file) {
-        if (file.type.indexOf('zip') > 0) {
+          console.log(file.name)
+        if (file.name.indexOf('xls') > 0 || file.name.indexOf('xlsx') > 0) {
           this.zip_file = file
           return false
         } else {
-          this.$Message.error('绘本压缩包上传，只支持“zip”格式')
-          this.zip_file = ''
+            this.$message({
+                type: 'error',
+                message: this.$t('user.type')
+            })
+          this.zip_file = null
           return false
         }
       },
@@ -344,7 +422,9 @@
             config
           }).then(res => {
             if (res.data.code == 0) {
-              this.dialog.add = false
+              // this.dialog.add = false
+                this.failed_list = res.data.data.failed.failed_info
+                this.upload_error_msg = true
               this.$message({
                 type: 'success',
                 message: this.$t('plant.success')
@@ -374,13 +454,150 @@
         }
       },
       uploadClose() {
+          this.upload_error_msg = false
+          this.failed_list = []
+          this.zipfile = null,
+              this.zip_file= null,
         this.uploaddialog = false
       },
-      uploadOk() {},
+      uploadOk() {
+          if(this.upload_error_msg){
+              this.uploadClose()
+          }else{
+              this.zipUpload()
+          }
+
+      },
       uploadUser() {
         this.uploaddialog = true
       },
-      handleSet(val) {},
+        // == 厂区分配
+        belongAdd4(){
+            if(this.belong_list.length>0){
+                if(this.belong_list[this.belong_list.length-1].plant_id){
+                    this.belong_list.push({
+                        full_name:'',
+                        plant_id:'',
+                        workshop_id:'',
+                        workshop_list:[],
+                        workshop_name:'',
+                    })
+                }else{
+                    this.$message({
+                        type: 'error',
+                        message: '不能让为空'
+                    })
+                }
+            }else {
+                this.belong_list.push({
+                    full_name:'',
+                    plant_id:'',
+                    workshop_id:'',
+                    workshop_list:[],
+                    workshop_name:'',
+                })
+            }
+            console.log(this.belong_list.length,this.belong_list)
+            this.disabled_index4 = this.belong_list.length-1
+
+
+            // this.disabled_index4 =
+        },
+        belongEdit4(index){
+          console.log(index,' index')
+          if(index==this.disabled_index4&&this.disabled_index4!==null){
+              this.disabled_index4 = null
+          }else {
+              this.disabled_index4 = index
+          }
+
+        },
+        belongdelete4(index){
+            this.belong_list.splice(this.disabled_index4,1)
+        },
+        dialogCancel4(){
+          this.dialogVisible4 = false
+            this.getUserList(this.search.limit, this.search.current_page)
+            this.belong_list = []
+        },
+        dialogOk4(){
+
+            request({
+                url: '/api/v1/user/distribution',
+                method: 'post',
+                data: qs.stringify({
+                    user_id:this.user_id,
+                    distribution: JSON.stringify(this.belong_list)
+                })
+            }).then(res => {
+                if (res.data.code == 0) {
+                    this.dialogVisible4 = false
+                    this.getUserList(this.search.limit, this.search.current_page)
+                    this.$message({
+                        type: 'success',
+                        message: this.$t('plant.success')
+                    })
+                }
+            })
+            this.dialogVisible4 = false
+        },
+      handleSet(val) {
+          this.user_id = val.id
+          this.belong_list = val.belong_arr
+          this.belong_list_2 = val.belong_arr
+          this.dialogVisible4 = true
+
+      },
+        selectWorkChange(val) {
+            let item = this.belong_list[this.disabled_index4]
+            this.belong_list.splice(this.disabled_index4,1,{
+                full_name:item.full_name,
+                plant_id:val,
+                workshop_id:'',
+                workshop_list:[],
+                workshop_name:item.workshop_name,
+            })
+            this.getAllLoop(val)
+        },
+        selectLoopChange(val){
+            let item = this.belong_list[this.disabled_index4]
+            this.belong_list.splice(this.disabled_index4,1,{
+                full_name:item.full_name,
+                plant_id:item.plant_id,
+                workshop_id:val,
+                workshop_list:item.workshop_list,
+                workshop_name:item.workshop_name,
+            })
+        },
+        getAllPlant() {
+            request({
+                url: '/api/v1/plant/get-all-plant',
+                method: 'post'
+            }).then(res => {
+                this.select_work_list = res.data.data
+            })
+        },
+        getAllLoop(item) {
+            request({
+                url: '/api/v1/workshop/get-workshop-by-plant',
+                method: 'post',
+                data: qs.stringify({
+                    plant_id: item
+                })
+            }).then(res => {
+                let item = this.belong_list[this.disabled_index4]
+                this.belong_list.splice(this.disabled_index4,1,{
+                    full_name:item.full_name,
+                    plant_id:item.plant_id,
+                    workshop_id:'',
+                    workshop_list:res.data.data,
+                    workshop_name:item.workshop_name,
+                })
+                // this.select_loop = this.local_workshop_id
+                // this.select_loop_list = res.data.data
+            })
+        },
+      //  ==
       handlAddRole() {
         this.dialog.add = true
       },
@@ -406,7 +623,14 @@
           data: qs.stringify(data)
         }).then(res => {
           if (res.data.code == 0) {
+              this.getUserList(this.search.limit, 1)
             this.dialog.add = false
+              this.add = {
+                  username: '',
+                  phone: '',
+                  email: '',
+                  role: false
+              }
             this.$message({
               type: 'success',
               message: this.$t('plant.success')
@@ -440,9 +664,11 @@
           method: 'post',
           data: qs.stringify(data)
         }).then(res => {
-          this.listLoading = false
-          this.list = res.data.data.data
-          this.search.total = res.data.data.count
+            this.dialog.edit = false
+            this.getUserList(this.search.limit, 1)
+          // this.listLoading = false
+          // this.list = res.data.data.data
+          // this.search.total = res.data.data.count
           // this.getList(this.name, 1, this.listQuery.limit)
           this.$message({
             type: 'success',
@@ -456,8 +682,8 @@
           username: val.username,
           phone: val.phone,
           email: val.email,
-          status: val.status == 10 ? 1 : 0,
-          role: val.role == 'admin' ? 1 : 0
+          status: val.status == 10 ? true : false,
+          role: val.role == 'admin' ? true : false
         }
         this.dialog.edit = true
       },
@@ -465,6 +691,7 @@
         this.getUserList(this.search.limit, 1)
       },
       handleCurrentChange(val) {
+          this.search.current_page = val
         this.getUserList(this.search.limit, val)
       },
       handleSizeChange(val) {

@@ -75,7 +75,10 @@ export default {
         normal: 'Normal',
         title: 'Batch Import User',
         upload: 'Upload File',
-        download: 'Download Template'
+        download: 'Download Template',
+        type: 'Only supports uploading excel files',
+        dis: 'Plant/Workshop Distribution',
+        add1: 'Add'
     },
     data: {
         scope: 'Period',

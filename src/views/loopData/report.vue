@@ -4,12 +4,12 @@
             <el-date-picker value-format="yyyy-MM-dd" v-model="value_date" type="date" @change="valueDateChange" :placeholder="$t('data.date')">
             </el-date-picker>
             <el-select v-model="select_date" filterable :placeholder="$t('data.scope')">
-                <el-option v-for="(index,item) in select_date_list" :key="index" :label="item" :value="index">
+                <el-option v-for="(index,item) in select_date_list" :key="index" :label="index" :value="index">
                 </el-option>
             </el-select>
             <el-button v-loading="btn_loading" style="margin-left: 10px;" type="success" @click="getReportList">{{$t('data.loop')}}</el-button>
         </sticky>
-        <section v-if="sec_loading">
+        <section v-show="sec_loading">
             <panel-group :paneldata='panelgroup_data'></panel-group>
             <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
                 <LineChart :option="lineChartData"></LineChart>
@@ -65,7 +65,7 @@
                 </div>
             </el-row>
         </section>
-        <section v-else>
+        <section v-show="!sec_loading">
            <reportempty></reportempty>
         </section>
         <!-- <el-row :gutter="8">
@@ -103,6 +103,7 @@
       },
       data() {
         return {
+            suggest:'',
           panelgroup_data: '',
           sec_loading: false,
           btn_loading: false,
@@ -117,7 +118,8 @@
           select_date: '',
           select_date_list: [],
           option_one: {},
-          option_two: {}
+          option_two: {},
+            panelgroup_data_tmp: '',
         }
       },
       methods: {
@@ -142,6 +144,12 @@
             loop_id: JSON.parse(window.localStorage.getItem('report')).id,
             scope: this.select_date
           }
+            this.panelgroup_data = {
+                result: '',
+                set_time: '',
+                loop_name: '',
+                switch: ''
+            }
           request({
             url: '/api/v1/result/report',
             method: 'post',
@@ -155,6 +163,12 @@
               loop_name: res.data.data.loop_name,
               switch: res.data.data.switch
             }
+              this.panelgroup_data_tmp = {
+                  result: res.data.data.result,
+                  set_time: res.data.data.set_time,
+                  loop_name: res.data.data.loop_name,
+                  switch: res.data.data.switch
+              }
             this.suggest = res.data.data.suggest
             this.lineChartData = {
               expectedData: res.data.data.chart_data.y_data.pv,
@@ -196,6 +210,9 @@
               data: res.data.data.esf
             }
             // this.chart(res.data.data.chart_data)
+          }).catch(error=>{
+              this.btn_loading = false
+              this.panelgroup_data = this.panelgroup_data_tmp
           })
         }
       }

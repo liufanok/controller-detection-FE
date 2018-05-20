@@ -15,6 +15,7 @@
 </template>
 <script>
   import echarts from 'echarts'
+  import { debounce } from '@/utils'
   require('echarts/theme/macarons')
   export default {
     data() {
@@ -44,10 +45,10 @@
       }
     },
     beforeDestroy() {
-      window.removeEventListener('resize', this.radarChart.resize)
-      if (this.radarChart) {
-        this.radarChart.dispose() // 销毁图表实例
-      }
+        if (this.radarChart) {
+            this.radarChart.dispose()
+        }
+        window.removeEventListener('resize', this.__resizeHanlder)
     },
     watch: {
       option() {
@@ -55,10 +56,17 @@
       }
     },
     mounted() {
-      this.initradarEchart()
+        this.__resizeHanlder = debounce(() => {
+            if (this.radarChart) {
+                this.radarChart.resize()
+            }
+        }, 100)
+        window.addEventListener('resize', this.__resizeHanlder)
+     // this.initradarEchart()
     },
     methods: {
       initradarEchart() {
+          if(this.radarChart)  this.radarChart.dispose()
         this.radarChart = echarts.init(document.getElementById(this.id))
         const itemoption = {
           // backgroundColor: new echarts.graphic.RadialGradient(0.5, 0.3, 0.2, [{
@@ -152,11 +160,11 @@
           }]
         }
         this.radarChart.setOption(itemoption)
-        window.addEventListener('resize', () => {
-          if (this.radarChart) {
-            this.radarChart.resize()
-          }
-        })
+        // window.addEventListener('resize', () => {
+        //   if (this.radarChart) {
+        //     this.radarChart.resize()
+        //   }
+        // })
       }
     }
   }

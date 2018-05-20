@@ -17,6 +17,7 @@
 </template>
 <script>
     import echarts from 'echarts'
+    import { debounce } from '@/utils'
     require('echarts/theme/macarons')
     export default {
       data() {
@@ -53,12 +54,20 @@
         if (this.linechart) {
           this.linechart.dispose()
         }
+          window.removeEventListener('resize', this.__resizeHanlder)
       },
       mounted() {
-        this.initLineEchart(this.option)
+          this.__resizeHanlder = debounce(() => {
+              if (this.linechart) {
+                  this.linechart.resize()
+              }
+          }, 100)
+          window.addEventListener('resize', this.__resizeHanlder)
+       // this.initLineEchart(this.option)
       },
       methods: {
         initLineEchart(option) {
+            if(this.linechart)  this.linechart.dispose()
           this.linechart = echarts.init(document.getElementById(this.id), 'macarons')
           const option1 = {
             title: {
@@ -120,11 +129,11 @@
             }]
           }
           this.linechart.setOption(option1)
-          window.addEventListener('resize', () => {
-            if (this.linechart) {
-              this.linechart.resize()
-            }
-          })
+          // window.addEventListener('resize', () => {
+          //   if (this.linechart) {
+          //     this.linechart.resize()
+          //   }
+          // })
         }
       }
     }

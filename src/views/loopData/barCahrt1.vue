@@ -57,6 +57,7 @@ export default {
   },
   methods: {
     initChart() {
+        if(this.chart)  this.chart.dispose()
       this.chart = echarts.init(this.$el, 'macarons')
 
       this.chart.setOption({

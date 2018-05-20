@@ -86,6 +86,9 @@ export default {
         title: '批量导入用户',
         upload: '上传文件',
         download: '下载模板',
+        type: '只支持上传excel文件',
+        dis: '车间/厂区分配',
+        add1: '增加',
     },
     data: {
     scope: '时间段',
